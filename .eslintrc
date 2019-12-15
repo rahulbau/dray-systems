@@ -1,0 +1,8 @@
+{
+    "extends": "rallycoding",
+    "rules": {
+        "arrow-body-style": "off",
+        "no-param-reassign": "off",
+        "camelcase": "off"
+    }
+}
