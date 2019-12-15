@@ -6,7 +6,6 @@ const {
 } = require('../../../util');
 const User = require('../models/User');
 const OTP = require('../models/UserOTP');
-const Bcrypt = require("bcryptjs");
 const commonFunctions = require("../../../util/commonFunctions");
 const moment = require('moment');
 
