@@ -37,8 +37,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/mongodbDemo/v1/readme', express.static(path.join(__dirname, '/readme')));
-app.use('/insurex/v1', routes);
-app.get('/insurex/v1', (req, res) => {
+app.use('/v1', routes);
+app.get('/v1', (req, res) => {
     res.send('Hello World!');
 });
 
