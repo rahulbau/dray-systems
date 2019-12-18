@@ -20,6 +20,8 @@ let UserSchema = new Schema({
         default: 1
     },
     accessTokens: [String],
+    userProfilePic: String,
+    userCoverPic: String,
     userPhone: {
         type: String,
         unique: true

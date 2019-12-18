@@ -171,8 +171,14 @@ async function verifyUser(req, res) {
                 let user = await User.findOne({
                     userPhone: req.body.userPhone
                 });
-                user = user.toObject();
-                delete user.userPassword;
+
+                if (user.deactivate == 1) {
+                    await User.findByIdAndUpdate(user._id, {
+                        $set: {
+                            deactivate: 0
+                        }
+                    });
+                }
                 const data = {
                     responseData: user,
                     accessToken : user.accessTokens[0]

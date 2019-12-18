@@ -6,17 +6,16 @@ const {
 } = require('../../../util');
 const User = require('../../authentication/models/User');
 const commonFunctions = require("../../../util/commonFunctions");
-const Eth = require('../models/addEth');
+const UserAction = require('../models/userAction');
 
 
-async function addMemberStat(req, res) {
+async function addUserFeedback(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         req.body.userId = req.body.userId || req.user._id;
-        memberStat = new MemberStat(req.body);
-        memberStat = await memberStat.save();
-        return responses.actionCompleteResponse(res, languageCode, memberStat, "", constants.responseMessageCode.ACTION_COMPLETE);
-
+        let feedback = new UserAction.feedback(req.body);
+        feedback = await feedback.save();
+        return responses.actionCompleteResponse(res, languageCode, feedback, "", constants.responseMessageCode.ACTION_COMPLETE);
     } catch (e) {
         logger.error(e);
         return responses.sendError(res, languageCode, {}, "", e);
@@ -24,13 +23,13 @@ async function addMemberStat(req, res) {
 }
 
 
-async function addPersonalHistory(req, res) {
+async function addSupportRequest(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         req.body.userId = req.body.userId || req.user._id;
-        personalHistory = new PersonalHistory(req.body);
-        personalHistory = await personalHistory.save();
-        return responses.actionCompleteResponse(res, languageCode, personalHistory, "", constants.responseMessageCode.ACTION_COMPLETE);
+        let supportRequest = new UserAction.support(req.body);
+        supportRequest = await supportRequest.save();
+        return responses.actionCompleteResponse(res, languageCode, supportRequest, "", constants.responseMessageCode.ACTION_COMPLETE);
 
     } catch (e) {
         logger.error(e);
@@ -92,14 +91,13 @@ async function editUser(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         const query = {
-            _id: req.query.userId || req.user._id
+            _id: req.body.userId || req.user._id
         };
         const options = {
             new: true
         };
         let userData = await User.findOneAndUpdate(query, req.body, options);
         userData = userData.toObject();
-        delete userData.userPassword;
         delete userData.accessTokens;
         return responses.actionCompleteResponse(res, languageCode, userData, "", constants.responseMessageCode.ACTION_COMPLETE);
 
@@ -287,20 +285,9 @@ async function getUserPolicy(req, res) {
 
 
 module.exports = {
-    addMemberStat,
-    addLabTest,
-    addEth,
-    getEHR,
+    addUserFeedback,
+    addSupportRequest,
     editUser,
     getUser,
-    addPastHistory,
-    addInsurancePolicy,
-    addMenstrualHistory,
-    addFamilyHistory,
     getUsers,
-    addPersonalHistory,
-    editInsurancePolicy,
-    editEhr,
-    editLabTest,
-    getUserPolicy
 }

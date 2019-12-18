@@ -6,20 +6,9 @@ const {
 
 
 const userValidations = {
-  addMemberStat: (req, res, next) => {
+  addUserFeedback: (req, res, next) => {
     const schema = Joi.object().keys({
-      heartRate: Joi.string().allow(''),
-      bloodPressure: Joi.string().allow(''),
-      respiratoryRate: Joi.string().allow(''),
-      bloodSugar: Joi.string().allow(''),
-      temperature: Joi.string().allow(''),
-      weight: Joi.string().allow(''),
-      height: Joi.string().required(),
-      pulseRate: Joi.string().allow(''),
-      waistSize: Joi.string().allow(''),
-      wristSize: Joi.string().allow(''),
-      abdomenSize: Joi.string().allow(''),
-      chestSize: Joi.string().allow(''),
+      feedback: Joi.string().allow(''),
       userId: Joi.string().allow('')
     });
 
@@ -33,17 +22,11 @@ const userValidations = {
     next();
   },
 
-  addLabTest: (req, res, next) => {
+  addSupportRequest: (req, res, next) => {
     const schema = Joi.object().keys({
-      testName: Joi.string().required(),
-      prescriberName: Joi.string().required(),
-      healthCareProvider: Joi.string().required(),
-      doctorInCharge: Joi.string().required(),
-      labTechnicianName: Joi.string().required(),
-      labName: Joi.string().required(),
-      testResult: Joi.string().allow(''),
-      othersResult: Joi.string().allow(''),
-      userId: Joi.string().allow('')
+      supportMessage: Joi.string().required(),
+      type: Joi.number().required(),
+      userId: Joi.string()
     });
 
     const validateBody = Joi.validate(req.body, schema);
@@ -111,41 +94,12 @@ const userValidations = {
 
   editUser: (req, res, next) => {
     let schema = Joi.object().keys({
-      userFirstName: Joi.string().allow(''),
-      userLastName: Joi.string().allow(''),
-      username: Joi.string().allow(''),
-      languageCode: Joi.string().allow(''),
-      userPhone: Joi.string().allow(''),
-      userPic: Joi.string().allow(''),
-      userDob: Joi.string().allow(''),
-      height: Joi.string().allow(''),
-      weight: Joi.string().allow(''),
-      userId: Joi.string().allow(''),
-      dependent: Joi.number(),
-      gender: Joi.string().allow(''),
-      maritalStatus: Joi.string().allow(''),
-      numberOfDependents: Joi.number(),
-      fatherName: Joi.string().allow(''),
-      motherName: Joi.string().allow(''),
-      identificationMark: Joi.string().allow(''),
-      surveyorNumber: Joi.string().allow(''),
-      nativeVillage: Joi.string().allow(''),
-      district: Joi.string().allow(''),
-      state: Joi.string().allow(''),
-      idProof: Joi.string().allow(''),
-      idProofNumber: Joi.string().allow(''),
-      idProofImage: Joi.string().allow(''),
-      communicationAddress: Joi.string().allow(''),
-      permanentAddress: Joi.string().allow(''),
-      occupation: Joi.string().allow(''),
-      occupationalAddress: Joi.string().allow(''),
-      qualification: Joi.string().allow(''),
-      extraCurricular: Joi.string().allow(''),
-      clubMembership: Joi.string().allow(''),
-      emergencyContactPerson: Joi.string().allow(''),
-      familyDoctor: Joi.string().allow(''),
-      familyDoctorAddress: Joi.string().allow(''),
-      relationUid: Joi.string().allow(''),
+      userId: Joi.string(),
+      userFullName: Joi.string(),
+      shopName: Joi.string(),
+      userProfilePic: Joi.string(),
+      userCoverPic: Joi.string(),
+      deactivate : Joi.number()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
