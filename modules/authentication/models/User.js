@@ -19,7 +19,6 @@ let UserSchema = new Schema({
         type: Number,
         default: 1
     },
-    accessTokens: [String],
     userProfilePic: String,
     userCoverPic: String,
     userPhone: {

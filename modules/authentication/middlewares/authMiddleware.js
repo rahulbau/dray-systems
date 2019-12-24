@@ -31,7 +31,6 @@ exports.auth = async function (req, res, next) {
                 user,
                 accessToken
             };
-            await commonFunctions.validateUser(validateOpts);
             req.user = user;
             next();
         }

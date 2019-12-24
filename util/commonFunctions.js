@@ -31,15 +31,10 @@ const transporter = nodemailer.createTransport({
 const generateJWToken = (payload) => {
     return new Promise((resolve, reject) => {
         try {
-            const secret = fs.readFileSync(path.resolve('config/private.key'));
-            const signOptions = {
-                issuer: 'insurex',
-                expiresIn: '30d'
-            };
-
+            const secret = "This is a secret";
             payload.creationDateTime = Date.now();
 
-            const token = JWT.sign(payload, secret, signOptions);
+            const token = JWT.sign(payload, secret,  { expiresIn: '7d' });
             resolve(token);
         } catch (error) {
             reject(error);
@@ -49,19 +44,10 @@ const generateJWToken = (payload) => {
 
 const validateAccessToken = (token) => {
     return new Promise((resolve, reject) => {
-        const secret = fs.readFileSync(path.resolve('config/private.key'));
-
-        const verifyOptions = {
-            issuer: 'insurex',
-            expiresIn: '30d'
-        };
-
-        JWT.verify(token, secret, verifyOptions, (err, decoded) => {
+        const secret = "This is a secret";
+        JWT.verify(token, secret, (err, decoded) => {
             if (err) {
-                logger.error(err.toString());
-                removeAccessToken({ accessToken: token }).catch((err1) => {
-                    logger.log(err1);
-                });
+                logger.error(err);
                 reject(responseMessageCode.INVALID_ACCESS_TOKEN);
             }
 

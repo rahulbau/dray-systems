@@ -47,21 +47,7 @@ async function registerUser(req, res) {
                 });
 
                 await user.save();
-                const payload = {
-                    userId: user._id
-                };
-                const accessToken = await commonFunctions.generateJWToken(payload);
-                const tokenArr = [accessToken];
-                await User.findByIdAndUpdate(user._id, {
-                    $set: {
-                        accessTokens: tokenArr
-                    }
-                });
-                const data = {
-                    responseData: user,
-                    accessToken
-                };
-
+                
                 //const emailOTP = commonFunctions.generateOTP();
                 const phoneOTP = commonFunctions.generateOTP();
 
@@ -116,9 +102,7 @@ async function loginUser(req, res) {
             });
             if (user) {
                
-                    if (user.accessTokens.length === 10) {
-                        throw constants.responseMessageCode.MAX_LOGIN_DEVICES_REACHED;
-                    } else {
+                    
                         await OTP.deleteMany({
                             object: userPhone,
                             type: parseInt(req.body.type) || 1
@@ -135,7 +119,7 @@ async function loginUser(req, res) {
                         });
                         await OTPDataPhone.save();
                         return responses.actionCompleteResponse(res, languageCode, {});
-                    }
+                    
                 
             } else {
                 logger.log("No user found");
@@ -171,7 +155,11 @@ async function verifyUser(req, res) {
                 let user = await User.findOne({
                     userPhone: req.body.userPhone
                 });
-
+                const payload = {
+                    userId: user._id
+                };
+                const accessToken = await commonFunctions.generateJWToken(payload);
+                
                 if (user.deactivate == 1) {
                     await User.findByIdAndUpdate(user._id, {
                         $set: {
@@ -179,9 +167,11 @@ async function verifyUser(req, res) {
                         }
                     });
                 }
+
+               
                 const data = {
                     responseData: user,
-                    accessToken : user.accessTokens[0]
+                    accessToken : accessToken
                 };
                 responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
 
