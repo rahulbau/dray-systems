@@ -6,7 +6,7 @@ const authMiddleware = require('../authentication/middlewares/authMiddleware');
 const validator = require('../authentication/validators/authValidator');
 
 router.post('/upload_media', multipartMiddleware, commonUtilController.uploadMedia);
-router.post('/category', commonUtilController.addCategory);
+// router.post('/category', commonUtilController.addCategory);
 router.get('/category',validator.userValidations.getCategory, commonUtilController.getCategory);
 
 module.exports = router;
