@@ -1,0 +1,82 @@
+[
+    {
+        "categoryName": "Shopping",
+        "type": 2,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Education",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Doctor",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Construction",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Jobs",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Entertainment",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Hotel",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Real Estate",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [36.098948, -11.110492]
+           }
+    },
+    {
+        "categoryName": "Activity",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [36.098948, -11.110492]
+           }
+    },
+    {
+        "categoryName": "Laywer/Agent",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [36.098948, -11.110492]
+           }
+    }
+]    

@@ -77,12 +77,12 @@ function uploadMedia(req, res) {
     }
 }
 
-async function addIcdMaster(req,res){
+async function addCategory(req,res){
     const languageCode =req.query.languageCode || 'en';
     try{
-        const icdCodes = fs.readFileSync(__dirname + '/ICD.json', 'utf-8');
+        const icdCodes = fs.readFileSync(__dirname + '/category.json', 'utf-8');
         JSON.parse(icdCodes).map( async singleObj => {
-            const data = new commonModel.icdMaster(singleObj);
+            const data = new commonModel.category(singleObj);
             await data.save();
         });
         return responses.actionCompleteResponse(res, languageCode, {}, "", constants.responseMessageCode.ACTION_COMPLETE);
@@ -94,10 +94,24 @@ async function addIcdMaster(req,res){
 }
 
 
-async function getIcdMaster(req,res){
-    const languageCode =req.query.languageCode || 'en';
+async function getCategory(req,res){
+    const languageCode = req.query.languageCode || 'en';
     try{
-        const data = await commonModel.icdMaster.find();
+        const tempArr = [];
+        if (req.query.long && req.query.lat) {
+            tempArr.push({
+                  $geoNear: {
+                     near: { type: "Point", coordinates: [ parseFloat(req.query.long) , parseFloat(req.query.lat) ] },
+                     distanceField: "dist.calculated",
+                     maxDistance: req.query.distance || 500,
+                     includeLocs: "dist.location",
+                     spherical: true
+                  }
+                });
+        } else {
+            tempArr.push({ $match : { type : parseInt(req.query.type),parentId : req.query.parentId || "" } });
+        }
+       let data = await commonModel.category.aggregate(tempArr);
         return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
     }catch( e ){
         logger.error(e);
@@ -105,10 +119,10 @@ async function getIcdMaster(req,res){
 
     }
 }
-
+  
 
 module.exports = {
     uploadMedia,
-    addIcdMaster,
-    getIcdMaster
+    addCategory,
+    getCategory
 };

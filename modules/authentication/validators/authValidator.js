@@ -142,6 +142,24 @@ let userValidations = {
     req.body = validateBody.value;
     next();
   },
+
+  getCategory: (req, res, next) => {
+    let schema = Joi.object().keys({
+      type: Joi.number().required(),
+      languageCode: Joi.string().allow(''),
+      lat: Joi.string().allow(''),
+      long: Joi.string().allow(''),
+      parentId : Joi.string().allow(''),
+      distance: Joi.number()
+    })
+    let validateBody = Joi.validate(req.query, schema);
+    if (validateBody.error) {
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
 }
 
 module.exports.userValidations = userValidations;

@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let OTPSchema = new Schema({
-       icd_code: String,
-       disease_name: String,
-       illness_category: String,
-       group: String,
-       illness_grade_point: String,
-       coverage_condition: String,
+
+let categorySchema = new Schema({
+       categoryName: String,
+       parentId: {
+              type: String,
+              default: ""
+       },
+       type: Number,  //1- Offline  ,  2- Online
+       location: {
+              type: { type: String },
+              coordinates: []
+             },
        createdAt: {
               type: Date,
               default: Date.now
@@ -15,6 +20,8 @@ let OTPSchema = new Schema({
 
 });
 
+categorySchema.index({ "location": "2dsphere" });
+
 module.exports = {
-       icdMaster: mongoose.model('ICD', OTPSchema),
+       category: mongoose.model('Category', categorySchema)
 }
