@@ -1,14 +1,7 @@
 [
     {
-        "categoryName": "Shopping",
-        "type": 2,
-        "location": {
-            "type": "Point",
-            "coordinates": [30.704649,76.717873]
-           }
-    },
-    {
-        "categoryName": "Education",
+        "categoryName": "School",
+        "parentId" : "5e1196cf66e4693a1e84904d",
         "type": 1,
         "location": {
             "type": "Point",
@@ -16,7 +9,8 @@
            }
     },
     {
-        "categoryName": "Doctor",
+        "categoryName": "College",
+        "parentId" : "5e1196cf66e4693a1e84904d",
         "type": 1,
         "location": {
             "type": "Point",
@@ -24,7 +18,8 @@
            }
     },
     {
-        "categoryName": "Construction",
+        "categoryName": "Institutes",
+        "parentId" : "5e1196cf66e4693a1e84904d",
         "type": 1,
         "location": {
             "type": "Point",
@@ -32,7 +27,8 @@
            }
     },
     {
-        "categoryName": "Jobs",
+        "categoryName": "Ayurvedic",
+        "parentId" : "5e1196cf66e4693a1e84904e",
         "type": 1,
         "location": {
             "type": "Point",
@@ -40,7 +36,8 @@
            }
     },
     {
-        "categoryName": "Entertainment",
+        "categoryName": "HomeoPathic",
+        "parentId" : "5e1196cf66e4693a1e84904e",
         "type": 1,
         "location": {
             "type": "Point",
@@ -48,7 +45,8 @@
            }
     },
     {
-        "categoryName": "Hotel",
+        "categoryName": "Allopathic",
+        "parentId" : "5e1196cf66e4693a1e84904e",
         "type": 1,
         "location": {
             "type": "Point",
@@ -56,27 +54,66 @@
            }
     },
     {
-        "categoryName": "Real Estate",
+        "categoryName": "Mechanical",
+        "parentId" : "5e1196cf66e4693a1e84904f",
         "type": 1,
         "location": {
             "type": "Point",
-            "coordinates": [36.098948, -11.110492]
+            "coordinates": [30.704649,76.717873]
            }
     },
     {
-        "categoryName": "Activity",
+        "categoryName": "Civil",
+        "parentId" : "5e1196cf66e4693a1e84904f",
         "type": 1,
         "location": {
             "type": "Point",
-            "coordinates": [36.098948, -11.110492]
+            "coordinates": [30.704649,76.717873]
            }
     },
     {
-        "categoryName": "Laywer/Agent",
+        "categoryName": "Non-Professional Jobs",
+        "parentId" : "5e1196cf66e4693a1e849050",
         "type": 1,
         "location": {
             "type": "Point",
-            "coordinates": [36.098948, -11.110492]
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Professional Jobs",
+        "parentId" : "5e1196cf66e4693a1e849050",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Cinema/Theatre",
+        "parentId" : "5e1196cf66e4693a1e849051",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "AC-Hotels",
+        "parentId" : "5e1196cf66e4693a1e849052",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Non-AC Hotels",
+        "parentId" : "5e1196cf66e4693a1e849052",
+        "type": 1,
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
            }
     }
 ]    
