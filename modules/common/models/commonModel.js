@@ -9,6 +9,12 @@ let categorySchema = new Schema({
               default: ""
        },
        type: Number,  //1- Offline  ,  2- Online
+       metaData : Object,
+       images : [String],
+       hasChild : {
+              type: Number,
+              default: 1
+       },
        location: {
               type: { type: String },
               coordinates: []
