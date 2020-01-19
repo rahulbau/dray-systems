@@ -111,7 +111,7 @@ async function getCategory(req,res){
         }
 
         if (req.query.searchString) {
-            tempArr.push({ $match : {$text: {$search: req.query.searchString}}});
+            tempArr.push({ $match :{ $or :[{categoryName: {$regex: req.query.searchString,$options:'i'}},{"metaData.name": {$regex: req.query.searchString,$options:'i'}}]}});
         } else {
             const tempObj = {parentId : req.query.parentId || ""};
             if (req.query.type) {
