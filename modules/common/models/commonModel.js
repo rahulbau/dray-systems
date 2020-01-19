@@ -27,7 +27,7 @@ let categorySchema = new Schema({
 });
 
 categorySchema.index({ "location": "2dsphere" });
-
+categorySchema.index({categoryName: 'text', 'metaData.name': 'text'});
 module.exports = {
        category: mongoose.model('Category', categorySchema)
 }

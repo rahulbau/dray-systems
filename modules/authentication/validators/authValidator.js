@@ -145,12 +145,13 @@ let userValidations = {
 
   getCategory: (req, res, next) => {
     let schema = Joi.object().keys({
-      type: Joi.number().required(),
+      type: Joi.number(),
       languageCode: Joi.string().allow(''),
       lat: Joi.string().allow(''),
       long: Joi.string().allow(''),
       parentId : Joi.string().allow(''),
-      distance: Joi.number()
+      distance: Joi.number(),
+      searchString: Joi.string().allow('')
     })
     let validateBody = Joi.validate(req.query, schema);
     if (validateBody.error) {

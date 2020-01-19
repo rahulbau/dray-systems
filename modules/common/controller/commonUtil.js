@@ -108,9 +108,18 @@ async function getCategory(req,res){
                      spherical: true
                   }
                 });
-        } else {
-            tempArr.push({ $match : { type : parseInt(req.query.type),parentId : req.query.parentId || "" } });
         }
+
+        if (req.query.searchString) {
+            tempArr.push({ $match : {$text: {$search: req.query.searchString}}});
+        } else {
+            const tempObj = {parentId : req.query.parentId || ""};
+            if (req.query.type) {
+                tempObj.type = parseInt(req.query.type);
+            }
+            tempArr.push({ $match : tempObj});
+        }
+        
        let data = await commonModel.category.aggregate(tempArr);
         return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
     }catch( e ){
