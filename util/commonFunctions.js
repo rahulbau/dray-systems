@@ -328,8 +328,8 @@ const twilioSendMessage = (data) => {
     return new Promise((resolve, reject) => {
         client.messages.create({
                 to: data.userPhone,
-                from: '+17012034963',
-                body: 'OTP for Just-Click is ' + data.otp + '. It is valid for 30 minutes only. Do not share this with anyone.',
+                from: '+16152063750',
+                body: 'OTP for Suskoo is ' + data.otp + '. It is valid for 30 minutes only. Do not share this with anyone.',
             },
             (err, message) => {
                 if (err) {

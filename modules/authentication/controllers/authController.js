@@ -68,12 +68,12 @@ async function registerUser(req, res) {
                 // await OTPData.save();
                 const OTPDataPhone = new OTP({
                     object: userPhone,
-                    otp: 1234,
+                    otp: phoneOTP,
                     type: 1
                 });
                 commonFunctions.twilioSendMessage({
                     userPhone: user.userPhone,
-                    otp: 1234
+                    otp: phoneOTP
                 });
                 await OTPDataPhone.save();
                 return responses.actionCompleteResponse(res, languageCode, {}, "", constants.responseMessageCode.ACTION_COMPLETE);
@@ -110,12 +110,12 @@ async function loginUser(req, res) {
                         const phoneOTP = commonFunctions.generateOTP();
                         const OTPDataPhone = new OTP({
                             object: userPhone,
-                            otp: 1234,
+                            otp: phoneOTP,
                             type: 1
                         });
                         commonFunctions.twilioSendMessage({
                             userPhone: user.userPhone,
-                            otp: 1234
+                            otp: phoneOTP
                         });
                         await OTPDataPhone.save();
                         return responses.actionCompleteResponse(res, languageCode, {});
