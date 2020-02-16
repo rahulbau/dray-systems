@@ -1,19 +1,19 @@
 [
     {
         "categoryName": "Grocery",
-        "parentId" : "5e4917465060585d7a39f2fa",
+        "parentId" : "5e492605b4103e6012a9829e",
         "type": 2   ,
-        "hasChild" : 1,
+        "hasChild" : 0,
         "metaData" : {
-            "name": "Singh Grocery Store",
-            "qualification" : "General",
+            "name": "Sugar",
+            "qualification" : "Best",
             "experience" : "10 years",
             "address" : "Balaji nagar",
             "village" : "Kodangal",
             "district" : "Vikarabad",
             "state" : "Telangana",
-            "description" : "We are selling all grocery , general food items on best market price.",
-            "specialist" : "Grocery, General items, Food Items",
+            "description" : "Best quality sugar on best market price.",
+            "specialist" : "38 Rs. per kg",
             "mobile" : "9657063045"
         },
         "location": {
@@ -23,19 +23,19 @@
     },
     {
         "categoryName": "Grocery",
-        "parentId" : "5e4917465060585d7a39f2fa",
+        "parentId" : "5e492605b4103e6012a9829e",
         "type": 2   ,
-        "hasChild" : 1,
+        "hasChild" : 0,
         "metaData" : {
-            "name": "Nagesh Grocery Store",
-            "qualification" : "General",
+            "name": "Moong Dal",
+            "qualification" : "Premium",
             "experience" : "10 years",
             "address" : "Balaji nagar",
             "village" : "Kodangal",
             "district" : "Vikarabad",
             "state" : "Telangana",
-            "description" : "We are selling all grocery , general food items on best market price.",
-            "specialist" : "Grocery, General items, Food Items",
+            "description" : "Premium quality moong dal on best market price.",
+            "specialist" : "92 Rs. per kg",
             "mobile" : "9657063045"
         },
         "location": {
@@ -44,20 +44,20 @@
            }
     },
     {
-        "categoryName": "Food Items",
-        "parentId" : "5e4917465060585d7a39f2fb",
+        "categoryName": "Grocery",
+        "parentId" : "5e492605b4103e6012a9829e",
         "type": 2   ,
         "hasChild" : 1,
         "metaData" : {
-            "name": "Champ Food Store",
-            "qualification" : "General",
+            "name": "Ashirwad Aata",
+            "qualification" : "Premium",
             "experience" : "10 years",
             "address" : "Balaji nagar",
             "village" : "Kodangal",
             "district" : "Vikarabad",
             "state" : "Telangana",
-            "description" : "We are selling all grocery , general food items on best market price.",
-            "specialist" : "Food Items",
+            "description" : "Premium quality Ashirwad Aata on best market price.",
+            "specialist" : "41 Rs. per kg",
             "mobile" : "9657063045"
         },
         "location": {
@@ -66,20 +66,20 @@
            }
     },
     {
-        "categoryName": "Sweets",
-        "parentId" : "5e1196cf66e4693a1e84904c",
+        "categoryName": "Grocery",
+        "parentId" : "5e492605b4103e6012a9829f",
         "type": 2   ,
-        "hasChild" : 1,
+        "hasChild" : 0,
         "metaData" : {
-            "name": "Gurunanak Sweets",
-            "qualification" : "Sweets Corner",
+            "name": "Sugar",
+            "qualification" : "Best",
             "experience" : "10 years",
             "address" : "Balaji nagar",
             "village" : "Kodangal",
             "district" : "Vikarabad",
             "state" : "Telangana",
-            "description" : "We are selling all type of milk sweet products items on best market price.",
-            "specialist" : "Sweets Items",
+            "description" : "Best quality sugar on best market price.",
+            "specialist" : "38 Rs. per kg",
             "mobile" : "9657063045"
         },
         "location": {
@@ -88,47 +88,25 @@
            }
     },
     {
-        "categoryName": "General Items",
-        "parentId" : "5e4917465060585d7a39f2fd",
+        "categoryName": "Grocery",
+        "parentId" : "5e492605b4103e6012a9829f",
         "type": 2   ,
-        "hasChild" : 1,
+        "hasChild" : 0,
         "metaData" : {
-            "name": "Debina General Store",
-            "qualification" : "General Corner",
+            "name": "Moong Dal",
+            "qualification" : "Premium",
             "experience" : "10 years",
             "address" : "Balaji nagar",
             "village" : "Kodangal",
             "district" : "Vikarabad",
             "state" : "Telangana",
-            "description" : "We are selling all type of General products items on best market price.",
-            "specialist" : "General Items",
+            "description" : "Premium quality moong dal on best market price.",
+            "specialist" : "92 Rs. per kg",
             "mobile" : "9657063045"
         },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
            }
-    },
-    {
-        "categoryName": "Vegetables",
-        "parentId" : "5e4917465060585d7a39f2fe",
-        "type": 2   ,
-        "hasChild" : 1,
-        "metaData" : {
-            "name": "Fresh Vegetable Store",
-            "qualification" : "Vegetable Corner",
-            "experience" : "10 years",
-            "address" : "Balaji nagar",
-            "village" : "Kodangal",
-            "district" : "Vikarabad",
-            "state" : "Telangana",
-            "description" : "We are selling all type of Vegetables on best market price.",
-            "specialist" : "Vegetable Items",
-            "mobile" : "9657063045"
-        },
-        "location": {
-            "type": "Point",
-            "coordinates": [30.704649,76.717873]
-           }
-    }
+    }    
 ]
