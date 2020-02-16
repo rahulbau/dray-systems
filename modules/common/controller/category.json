@@ -47,7 +47,7 @@
         "categoryName": "Grocery",
         "parentId" : "5e492605b4103e6012a9829e",
         "type": 2   ,
-        "hasChild" : 1,
+        "hasChild" : 0,
         "metaData" : {
             "name": "Ashirwad Aata",
             "qualification" : "Premium",
