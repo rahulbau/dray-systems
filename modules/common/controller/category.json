@@ -1,9 +1,43 @@
 [
     {
         "categoryName": "Grocery",
-        "parentId" : "5e1196cf66e4693a1e84904c",
+        "parentId" : "5e4917465060585d7a39f2fa",
         "type": 2   ,
         "hasChild" : 1,
+        "metaData" : {
+            "name": "Singh Grocery Store",
+            "qualification" : "General",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all grocery , general food items on best market price.",
+            "specialist" : "Grocery, General items, Food Items",
+            "mobile" : "9657063045"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [30.704649,76.717873]
+           }
+    },
+    {
+        "categoryName": "Grocery",
+        "parentId" : "5e4917465060585d7a39f2fa",
+        "type": 2   ,
+        "hasChild" : 1,
+        "metaData" : {
+            "name": "Nagesh Grocery Store",
+            "qualification" : "General",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all grocery , general food items on best market price.",
+            "specialist" : "Grocery, General items, Food Items",
+            "mobile" : "9657063045"
+        },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
@@ -11,9 +45,21 @@
     },
     {
         "categoryName": "Food Items",
-        "parentId" : "5e1196cf66e4693a1e84904c",
+        "parentId" : "5e4917465060585d7a39f2fb",
         "type": 2   ,
         "hasChild" : 1,
+        "metaData" : {
+            "name": "Champ Food Store",
+            "qualification" : "General",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all grocery , general food items on best market price.",
+            "specialist" : "Food Items",
+            "mobile" : "9657063045"
+        },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
@@ -24,6 +70,18 @@
         "parentId" : "5e1196cf66e4693a1e84904c",
         "type": 2   ,
         "hasChild" : 1,
+        "metaData" : {
+            "name": "Gurunanak Sweets",
+            "qualification" : "Sweets Corner",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all type of milk sweet products items on best market price.",
+            "specialist" : "Sweets Items",
+            "mobile" : "9657063045"
+        },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
@@ -31,9 +89,21 @@
     },
     {
         "categoryName": "General Items",
-        "parentId" : "5e1196cf66e4693a1e84904c",
+        "parentId" : "5e4917465060585d7a39f2fd",
         "type": 2   ,
         "hasChild" : 1,
+        "metaData" : {
+            "name": "Debina General Store",
+            "qualification" : "General Corner",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all type of General products items on best market price.",
+            "specialist" : "General Items",
+            "mobile" : "9657063045"
+        },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
@@ -41,9 +111,21 @@
     },
     {
         "categoryName": "Vegetables",
-        "parentId" : "5e1196cf66e4693a1e84904c",
+        "parentId" : "5e4917465060585d7a39f2fe",
         "type": 2   ,
         "hasChild" : 1,
+        "metaData" : {
+            "name": "Fresh Vegetable Store",
+            "qualification" : "Vegetable Corner",
+            "experience" : "10 years",
+            "address" : "Balaji nagar",
+            "village" : "Kodangal",
+            "district" : "Vikarabad",
+            "state" : "Telangana",
+            "description" : "We are selling all type of Vegetables on best market price.",
+            "specialist" : "Vegetable Items",
+            "mobile" : "9657063045"
+        },
         "location": {
             "type": "Point",
             "coordinates": [30.704649,76.717873]
