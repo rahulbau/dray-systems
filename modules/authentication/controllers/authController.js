@@ -8,6 +8,7 @@ const User = require('../models/User');
 const OTP = require('../models/UserOTP');
 const commonFunctions = require("../../../util/commonFunctions");
 const moment = require('moment');
+const Bcrypt = require("bcryptjs");
 
 
 //****************************************************************************************/
@@ -17,66 +18,40 @@ async function registerUser(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         let {
-            userEmail,
-            userFullName,
-            userPhone,
-            userCountry,
-            shopName,
+            email,
+            password,
+            role,
+            userInfo,
+            educationalInfo,
+            emergencyContact
         } = req.body;
             let user = await User.findOne({
-                $or: [{
-                    userEmail: userEmail
-                }, {
-                    userPhone: userPhone
-                }],
-                $and: [{
-                    role: req.body.role || 1
-                }]
-            });
+                email,
+                role
+            }).lean();
             if (user) {
                 throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
-
             } else {
-                user = new User({
-                    userEmail,
-                    userFullName,
-                    userPhone,
-                    userCountry: userCountry || '',
-                    shopName: shopName || '',
-                    role: req.body.role || 1
+                password = Bcrypt.hashSync(password, 10);
+                const userData = new User({
+                    email,
+                    password,
+                    role,
+                    userInfo,
+                    educationalInfo,
+                    emergencyContact
                 });
-
-                await user.save();
-                
-                //const emailOTP = commonFunctions.generateOTP();
-                const phoneOTP = commonFunctions.generateOTP();
-
-                //  ----------- send OTP to verify ------------------
-
-                // OTPData = new OTP({
-                //     userEmail,
-                //     otp: emailOTP,
-                //     type: 1
-                // });
-                // const mailOptions = {
-                //     from: process.env.EMAIL_SENDER, // sender address
-                //     to: user.userEmail,
-                //     subject: 'Verify OTP',
-                //     html: '<p>OTP for Insurex is ' + emailOTP + '. It is valid for 30 minutes only. Do not share this with anyone.</p>'
-                // };
-                // commonFunctions.sendEmailNodemailer(mailOptions);
-                // await OTPData.save();
-                const OTPDataPhone = new OTP({
-                    object: userPhone,
-                    otp: phoneOTP,
-                    type: 1
-                });
-                commonFunctions.twilioSendMessage({
-                    userPhone: user.userPhone,
-                    otp: phoneOTP
-                });
-                await OTPDataPhone.save();
-                return responses.actionCompleteResponse(res, languageCode, {}, "", constants.responseMessageCode.ACTION_COMPLETE);
+                const user = await userData.save();
+                const payload = {
+                    userId: user._id
+                };
+                delete user.password;
+                const accessToken = await commonFunctions.generateJWToken(payload);
+                const data = {
+                    responseData: user,
+                    accessToken : accessToken
+                };
+                return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
             }
         
     } catch (e) {
@@ -86,6 +61,9 @@ async function registerUser(req, res) {
 }
 //*************************** End of User Register Controller ***************************//
 
+
+
+
 //****************************************************************************************/
 //                                 User login Controller                                 //
 //****************************************************************************************/
@@ -93,34 +71,28 @@ async function loginUser(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         let {
-            userPhone,
-            languageCode
+            email,
+            password,
+            role
         } = req.body
             let user = await User.findOne({
-                userPhone,                
-                role: req.body.role || 1
-            });
-            if (user) {
-               
-                    
-                        await OTP.deleteMany({
-                            object: userPhone,
-                            type: parseInt(req.body.type) || 1
-                        });
-                        const phoneOTP = commonFunctions.generateOTP();
-                        const OTPDataPhone = new OTP({
-                            object: userPhone,
-                            otp: phoneOTP,
-                            type: 1
-                        });
-                        commonFunctions.twilioSendMessage({
-                            userPhone: user.userPhone,
-                            otp: phoneOTP
-                        });
-                        await OTPDataPhone.save();
-                        return responses.actionCompleteResponse(res, languageCode, {});
-                    
+                email,                
+                role
+            }).lean();
+            if (user) {      
                 
+                let currectPwd = Bcrypt.compareSync(password, user.password)
+                if (!currectPwd) {
+                    logger.log("INVALID PASSWORD");
+                    throw constants.responseMessageCode.INVALID_CREDENTIALS;
+                }                    
+                const accessToken = await commonFunctions.generateJWToken({userId: user._id});
+                delete user.password;
+                const data = {
+                    responseData: user,
+                    accessToken : accessToken
+                };
+                return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
             } else {
                 logger.log("No user found");
                 throw constants.responseMessageCode.ACCOUNT_NOT_REGISTER;

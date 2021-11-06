@@ -95,11 +95,12 @@ const userValidations = {
   editUser: (req, res, next) => {
     let schema = Joi.object().keys({
       userId: Joi.string(),
-      userFullName: Joi.string(),
-      shopName: Joi.string(),
-      userProfilePic: Joi.string(),
-      userCoverPic: Joi.string(),
-      deactivate : Joi.number()
+      userInfo: Joi.object().optional(),
+      educationalInfo: Joi.array().optional(),
+      emergencyContact: Joi.object().optional(),
+      notificationFlag: Joi.boolean().optional(),
+      userExperience: Joi.object().optional(),
+      registrationStep: Joi.number().optional()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {

@@ -96,9 +96,8 @@ async function editUser(req, res) {
         const options = {
             new: true
         };
-        let userData = await User.findOneAndUpdate(query, req.body, options);
-        userData = userData.toObject();
-        delete userData.accessTokens;
+        let userData = await User.findOneAndUpdate(query, req.body, options).lean();
+        delete userData.password;
         return responses.actionCompleteResponse(res, languageCode, userData, "", constants.responseMessageCode.ACTION_COMPLETE);
 
     } catch (e) {

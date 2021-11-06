@@ -6,7 +6,7 @@ const userController = require('./controllers/userController');
 
 router.post('/feedback',userValidator.addUserFeedback, authMiddleware.auth, userController.addUserFeedback);
 router.post('/supportRequest',userValidator.addSupportRequest, authMiddleware.auth, userController.addSupportRequest);
-router.put('/user',userValidator.editUser, authMiddleware.auth, userController.editUser);
-router.get('/user', authMiddleware.auth, userController.getUser);
+router.put('',userValidator.editUser, authMiddleware.auth, userController.editUser);
+router.get('', authMiddleware.auth, userController.getUser);
 router.get('/users', authMiddleware.auth, userController.getUsers);
 module.exports = router;

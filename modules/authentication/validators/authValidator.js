@@ -8,13 +8,13 @@ let userValidations = {
   // Signup Fields validation
   signUp: (req, res, next) => {
     let schema = Joi.object().keys({
-      userEmail: Joi.string().trim().email().required(),
-      userFullName: Joi.string().required(),
-      languageCode: Joi.string().allow(''),
-      userPhone: Joi.string().required(),
-      role: Joi.number(),
-      userCountry: Joi.string(),
-      shopName: Joi.string()
+      email: Joi.string().trim().email().required(),
+      languageCode: Joi.string().optional().allow(''),
+      password: Joi.string().required(),
+      role: Joi.number().required(),
+      userInfo: Joi.object().optional(),
+      educationalInfo: Joi.array().optional(),
+      emergencyContact: Joi.object().optional()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
@@ -29,11 +29,10 @@ let userValidations = {
   // Login fields validation
   login: (req, res, next) => {
     let schema = Joi.object().keys({
-      userPhone: Joi.string().trim().required(),
-      role: Joi.number(),
-      languageCode: Joi.string().allow('')
-
-
+      email: Joi.string().trim().email().required(),
+      languageCode: Joi.string().optional().allow(''),
+      password: Joi.string().required(),
+      role: Joi.number().required()
     })
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {

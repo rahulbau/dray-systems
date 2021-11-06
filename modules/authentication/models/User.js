@@ -1,42 +1,38 @@
+const { boolean } = require('@hapi/joi');
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
-    userEmail: {
-        type: String,
-        default: '',
-        unique: true
-    },
-    userFullName: {
-        type: String,
-        default: ''
-    },
-    deactivate: {
-        type: Number,
-        default: 0
-    },
-    role: {
+    email: String,
+    password: String,
+    registrationStep: {
         type: Number,
         default: 1
     },
-    userProfilePic: String,
-    userCoverPic: String,
-    userPhone: {
-        type: String,
-        unique: true
+    role: {
+        type: Number,
+        default: 1  // -- 1 for employee, 2 -- for job seeker
     },
-    // emailVarified: {
-    //     type: Number,
-    //     default: 0,
-    // },
-    // phoneVarified: {
-    //     type: Number,
-    //     default: 0,
-    // },
-    userCountry: {
-        type: String,
+    userInfo: {
+        type: Object,
+        default: null
     },
-    shopName : String,
+    educationalInfo: {
+        type: Object,
+        default: null
+    },
+    emergencyContact: {
+        type: Object,
+        default: null
+    },
+    userExperience: {
+        type: Object,
+        default: null
+    },
+    notificationFlag: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
