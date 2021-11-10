@@ -31,8 +31,7 @@ let userValidations = {
     let schema = Joi.object().keys({
       email: Joi.string().trim().email().required(),
       languageCode: Joi.string().optional().allow(''),
-      password: Joi.string().required(),
-      role: Joi.number().required()
+      password: Joi.string().required()
     })
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
@@ -127,9 +126,9 @@ let userValidations = {
     next();
   },
 
-  checkUid: (req, res, next) => {
+  verifyEmail: (req, res, next) => {
     let schema = Joi.object().keys({
-      uid: Joi.string().required(),
+      email: Joi.string().required(),
       languageCode: Joi.string().allow('')
 
     })

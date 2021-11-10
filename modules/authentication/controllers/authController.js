@@ -9,6 +9,7 @@ const OTP = require('../models/UserOTP');
 const commonFunctions = require("../../../util/commonFunctions");
 const moment = require('moment');
 const Bcrypt = require("bcryptjs");
+const { addInsurancePolicy } = require('../../user/validators/userValidator');
 
 
 //****************************************************************************************/
@@ -26,8 +27,7 @@ async function registerUser(req, res) {
             emergencyContact
         } = req.body;
             let user = await User.findOne({
-                email,
-                role
+                email
             }).lean();
             if (user) {
                 throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
@@ -72,12 +72,10 @@ async function loginUser(req, res) {
     try {
         let {
             email,
-            password,
-            role
+            password
         } = req.body
             let user = await User.findOne({
-                email,                
-                role
+                email
             }).lean();
             if (user) {      
                 
@@ -352,17 +350,22 @@ async function changePassword(req, res) {
 }
 
 
-async function checkUid(req, res) {
+async function verifyEmail(req, res) {
     const languageCode = req.query.languageCode || 'en';
-    try {
-        
-        const uidData = await User.findOne({
-            uid: req.body.uid,
-        });
-        const response = {
-            uid_present : uidData ? 1 : 0
+    try {        
+        let user = await User.findOne({
+            email: req.body.email
+        }).lean();
+        if (!user) { 
+            throw constants.responseMessageCode.ACCOUNT_NOT_REGISTER;
+        }
+        const accessToken = await commonFunctions.generateJWToken({userId: user._id});
+        delete user.password;
+        const data = {
+            responseData: user,
+            accessToken : accessToken
         };
-        responses.actionCompleteResponse(res, languageCode, response, "", constants.responseMessageCode.ACTION_COMPLETE);
+        return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
     } catch (e) {
         logger.error(e);
         return responses.sendError(res, languageCode, {}, "", e);
@@ -378,5 +381,5 @@ module.exports = {
     forgotPassword,
     resetPassword,
     changePassword,
-    checkUid
+    verifyEmail
 }

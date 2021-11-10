@@ -90,13 +90,13 @@ async function getEHR(req, res) {
 async function editUser(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
-        const query = {
-            _id: req.body.userId || req.user._id
-        };
+        const userId = req.body.userId || req.user._id;
         const options = {
             new: true
         };
-        let userData = await User.findOneAndUpdate(query, req.body, options).lean();
+        let userData = await User.findByIdAndUpdate(userId, {
+            $set: req.body.updateBody
+        }, options).lean();
         delete userData.password;
         return responses.actionCompleteResponse(res, languageCode, userData, "", constants.responseMessageCode.ACTION_COMPLETE);
 
