@@ -1,0 +1,102 @@
+<!-- <div class="container" >
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Sign In</h5>
+          <form class="form-signin" [formGroup]="loginForm">
+
+            <div class="form-group">
+              <label for="inputEmail" [ngClass]="{'required': checkField(loginForm.get('username')) }">Email address *</label>
+              <input type="email" [ngClass]="{'required': checkField(loginForm.get('username')) }" class="form-control rounded" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" formControlName="username">
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword" [ngClass]="{'required': checkField(loginForm.get('password')) }">Password *</label>
+                <input type="password" class="form-control rounded" [ngClass]="{'required': checkField(loginForm.get('password')) }" id="inputPassword" aria-describedby="passwordHelp" placeholder="Enter password" formControlName="password">
+            </div>
+
+            <p class="alert alert-danger" role="alert" *ngIf="error">
+              <strong>There was an error!</strong><br>Please check your username/password and try again.
+            </p>
+
+            <button id="submitButton" class="btn btn-lg btn-primary btn-block text-uppercase" type="button" [disabled]="!loginForm.valid || processing" (click)="onSubmitButtonClicked()">{{ processing ? 'Validating...' : 'Sign in' }}</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+  <div class="jumbotron vertical-center">
+    <div class="d-flex flex-lg-row flex-md-row flex-row-reverse flex-xxl-row flex-sm-column-reverse flex-column-reverse w-100 align-items-center">
+        <div class="col-md-6 col-sm-10 col-xs-12 login-form-bg d-flex align-items-center">
+            <div class="container">
+                <div class="col-md-7 m-auto">
+                    <img src="assets/img/logo.png" class="m-auto d-block" alt="darysystemsinc" />
+                    <form class="py-2 mt-4" [formGroup]="loginForm">
+                      <h2>Welcome!</h2>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label rounded-pill">Email</label>
+                            <input type="email" class="form-control rounded-pill" id="exampleInputPassword1" formControlName="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label rounded-pill">Password</label>
+                            <input type="password" class="form-control rounded-pill" id="password" formControlName="password">
+                            <a class="forgot-password flex-row-reverse d-flex">Forgot Password?</a>
+                        </div>
+
+                        <a class="btn mt-4 mb-4 btn-primary rounded-pill w-100"  [ngClass]="{'disabled': !loginForm.valid || processing}" (click)="onSubmitButtonClicked()">{{ processing ? 'Validating...' : 'Login' }}</a>
+                        <h5 class="or-divider py-3"></h5>
+                        <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#singupOptionModal" class="btn mt-4 btn-primary rounded-pill w-100">Sign up</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-4">
+            <div class="container">
+                <div class="col-md-9 m-auto">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="assets/img/slider-01.jpg" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="assets/img/slider-02.png" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item">
+                            <img src="assets/img/slider-03.png" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+
+                        <div class="slide-content">
+                            <h3 class="text-center py-2">Dray Systems your Digital Workhorse</h3>
+                             <p class="text-center">Automated Manpower Coordination Software</p>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="singupOptionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-4 text-center">
+            <a href="signup.html" class="btn btn-lg btn-secondary rounded-pill blue-btn">Join as Organization</a>
+            <h3 class="py-4 m-0">OR</h3>
+            <a href="employee-signup.html" class="btn btn-secondary btn-lg rounded-pill blue-btn">Join as Employees</a>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+

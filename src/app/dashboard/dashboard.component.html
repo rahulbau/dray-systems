@@ -1,0 +1,396 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white p-0"> 
+      <div class="col-md-11 m-auto d-flex align-items-center">
+        <a class="navbar-brand col-xl-1 col-lg-2 col-md-2" href="dashboard.html">
+          <img src="assets/img/logo.png" alt="darysystemsinc" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse main-menu" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="dashboard.html">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                My Info
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="personal.html">Personal</a></li>                  
+                <li><a class="dropdown-item" href="job-profile.html">Job</a></li>                  
+                <li><a class="dropdown-item" href="traning.html">Training</a></li>
+                <li><a class="dropdown-item" href="#">Prerequisites</a></li>                  
+                <li><a class="dropdown-item" href="discipline.html">Discipline</a></li>                  
+                <li><a class="dropdown-item" href="saftety.html">Safety</a></li>
+                <li><a class="dropdown-item" href="documents.html">Documents</a></li>
+                <li><a class="dropdown-item" href="#">Time Off</a></li>
+                <li><a class="dropdown-item" href="competency.html">Core Competencies</a></li>
+                <li><a class="dropdown-item" href="performance.html">Performance</a></li>              
+                <li><a class="dropdown-item" href="#">Onboarding</a></li>            
+                <li><a class="dropdown-item" href="apprenticcship.html">Apprenticeship</a></li>                                 
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="my_team.html">My Team</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="people.html">People</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="job-board.html">Job Board</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="reports.html">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="file.html">Files</a>
+            </li>                                        
+          </ul>
+        </div>
+        <form class="d-flex">
+          <input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">            
+        </form>
+
+        <ul class="tp-right-menu">
+          <li>
+              <a href="javascript:void()"><img src="assets/img/message.png" /></a>
+          </li>
+          <li>
+              <a href="help.html"><img src="assets/img/help.png" /></a>
+          </li>
+          <li class="user-menu nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="setting" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="assets/img/setting.png" />
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="setting">
+                <li><a data-bs-toggle="modal" data-bs-target="#terminateModal" class="dropdown-item" href="#">Terminate</a></li>
+                <li><a class="dropdown-item" href="access_level.html">Access Level</a></li>                                      
+            </ul>
+          </li>
+        <li class="user-menu nav-item dropdown">
+            <a (click)="logout()" class="user-status nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">                  
+                <span class="login-user-img"></span>
+            </a>       
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Account Settings</a></li>                    
+                <li><a class="dropdown-item" href="change_password.html">Change Password</a></li>                  
+                <li><a class="dropdown-item" href="login.html">Logout</a></li>                 
+              </ul>
+        </li>
+        </ul>
+      </div>
+    </nav>
+    <section class="w-100">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-3 bg-light text-dark user-widget py-4">
+                  <div class="w-100 request-time-container bg-white mb-4">
+                      <div class="container">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <div class="user-pic-lg text-center py-4">
+                                      <div class="user-img-container">
+                                         <a href="user-profile.html"> <img src="assets/img/user.png" class="card-img-top" alt="..."></a>
+                                          <span class="status active-status"></span>
+                                      </div>
+                                      <div class="bg-light user-widget-bglight"></div>                                
+                                  </div>         
+                              </div>
+                              <div class="col-md-8 d-flex flex-column justify-content-center">
+                                  <h5>Jordan Jackson</h5>
+                                  <span>Beta Tester</span>
+                                  <button data-bs-toggle="modal" data-bs-target="#timeOff" class="btn btn-primary w-100 mb-2 btn-light-blue">Request Time Off</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                 <span class="export-btn" data-bs-toggle="modal" data-bs-target="#importDetails">...</span>
+
+                  <h4 class="text-center">Ready To Go</h4>
+                  <div class="card-group mb-3">
+                      <div class="card">
+                          <div class="user-pic-lg text-center py-4">
+                              <div class="user-img-container">
+                                  <a href="user-profile.html"><img src="assets/img/women.png" class="card-img-top" alt="..."></a>
+                                  <span class="status active-status"></span>
+                              </div>
+                              <div class="bg-light user-widget-bglight"></div>                                
+                          </div>
+                          <div class="card-body text-center">
+                              <h5 class="card-title">Jennifer Chung</h5>
+                              <p class="card-text">Beta Tester | Floorhand</p>
+                              <span class="rating-list star five-star"></span>
+                          </div>
+                          <div class="card-footer bg-white text-center">
+                              <small class="text-muted"><img class="location-icon" src="assets/img/location.png" /> 958 Blossom Hill, San Jose, CA 95123</small>
+                          </div>                        
+                      </div>                        
+                  </div>
+                  <div class="card-group mb-3">
+                      <div class="card">
+                          <div class="user-pic-lg text-center py-4">
+                              <div class="user-img-container">
+                                  <a href="user-profile.html"><img src="assets/img/user.png" class="card-img-top" alt="..."></a>
+                                  <span class="status active-status"></span>
+                              </div>
+                              <div class="bg-light user-widget-bglight"></div>                                
+                          </div>
+                          <div class="card-body text-center">
+                              <h5 class="card-title">Jordan Jackson</h5>
+                              <p class="card-text">Beta Tester</p>
+                              <span class="rating-list star five-star"></span>
+                          </div>
+                          <div class="card-footer bg-white text-center">
+                              <small class="text-muted"><img class="location-icon" src="assets/img/location.png" /> 958 Blossom Hill, San Jose, CA 95123</small>
+                          </div>                        
+                      </div>                        
+                  </div>                                        
+              </div>
+
+              <div class="col-md-9 bg-white text-dark py-4">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="card">
+                                  <div class="card-header">
+                                   <strong>  Open Positions</strong> 
+                                  </div>
+                                  <div class="card-body">                                    
+                                      <p class="card-text">Today there are <u>10</u> open positions</p>                          
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="card">
+                                  <div class="card-header">
+                                    <strong>  Manpower Requests</strong>
+                                  </div>
+                                  <div class="card-body">                                        
+                                      <p class="card-text">You have <u>3</u> manpower requests</p>                          
+                                  </div>
+                              </div>
+                          </div>  
+                          
+                          
+
+                          <div class="col-md-12 mt-4">    
+                              <div class="card">
+                                  <div class="card-header">
+                                     <strong>Reports</strong>
+                                  </div>
+                                  <div class="card-body">                                              
+                                      <div class="container">
+                                          <div class="row">
+                                              <div class="col-md-12 mb-4">    
+                                                  <div class="input-daterange col-md-5 d-flex float-end"> 
+                                                      From: <input class="form-control rounded-pill" type="text" id="datepicker" />
+                                                      To: <input class="form-control rounded-pill" type="text" id="datepickerFrom" />
+                                                  </div>
+                                              </div>                                                
+                                              <div class="col-md-6 mb-3">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <strong> Filled Positions</strong>
+                                                      </div>
+                                                      <div class="mt-4 mb-4 graph-body">
+                                                          <canvas id="myChart" class="m-auto" style="width:100%;max-width:400px"></canvas>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                              <div class="col-md-6 mb-3">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                     <strong>Total Filled Positions</strong>
+                                                      </div>
+                                                      <div class="mt-4 mb-4 graph-body">                                    
+                                                           <canvas class="m-auto" id="filledPostion" style="width:100%;max-width:400px"></canvas>
+                                                      </div>
+                                                  </div>                   
+                                              </div>
+
+                                              <div class="col-md-6 mb-3">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                        <strong> Positions Filled per Team Member</strong> 
+                                                      </div>
+                                                      <div class="mt-4 mb-4 graph-body">                                    
+                                                          <canvas class="m-auto" id="teamMember" style="width:100%;max-width:400px"></canvas>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                              <div class="col-md-6 mb-3">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <strong>My Turnover 60%</strong>
+                                                      </div>
+                                                      <div class="mt-4 mb-4 graph-body">   
+                                                          <div id="piechart"></div>
+                                                      </div>
+                                                  </div>                   
+                                              </div>                                                
+                                          </div>
+                                      </div>                     
+                                  </div>
+                              </div>
+                              <div class="floting-chat">
+                                  <img src="assets/img/chat-icon.png" />
+                              </div>
+                          </div>                              
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <div class="modal fade" id="terminateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="terminateModalLabel">Terminate Employment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <div class="row">
+              <h4 class="emp-name">Jordan Jackson</h4>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-3">
+                <label class="form-label">Effective Date</label>
+                <input type="text" class="form-control" id="datepicker" />
+              </div>
+    
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-3">
+                <label class="form-label">Reason For Termination</label>
+                <select id="inputState" class="form-select">
+                  <option selected="">Select...</option>
+                  <option>Dismissed</option>
+                  <option>Shortage of Work</option>
+                  <option>+ More Reasons</option>
+                </select>
+              </div>
+    
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-3">
+                <label class="form-label">Rehire</label>
+                <select id="inputState" class="form-select">
+                  <option selected="">Select...</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+    
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-3">
+                <label class="form-label">Notes</label>
+                <input type="text" class="form-control" />
+              </div>
+    
+              <div class="col-md-12 mb-3">
+                <div class="d-flex d-flex align-items-center">
+                  <label class="form-check-label mr-4 col-md-4">Replacement Required</label>
+                  <div class="d-flex px-4 col-md-6">
+                    <label class="form-check-label col chk-style mt-4">
+                      <input class="form-check-input" type="checkbox" checked="" />
+                      <span class="checkmark"></span>
+                      Yes
+                    </label>
+                    <label class="form-check-label col chk-style mt-4">
+                      <input class="form-check-input" type="checkbox" />
+                      <span class="checkmark"></span>
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button type="button" class="btn btn-secondary rounded-pill blue-btn" data-bs-dismiss="modal">Send Exit
+              Interview To Employee</button>
+            <button type="button" class="btn white-btn btn-secondary rounded-pill" data-bs-dismiss="modal">Send Termination
+              Form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="importDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <button type="button" class="btn btn-primary w-100 mb-2 btn-light-blue">
+              <img src="assets/img/download.png" />
+              Import Ready To Go's from Applicant Tracking System
+            </button>
+            <button type="button" class="btn btn-primary w-100 mb-2 btn-mid-blue">
+              <img src="assets/img/download.png" />
+              Import from Employee Database
+            </button>
+            <button type="button" class="btn btn-primary w-100 mb-2 btn-dark-blue">
+              <img src="assets/img/add-icon.png" />
+              Add Employee
+            </button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+
+
+<div class="modal fade" id="timeOff" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="timeOffLabel">Request Time Off</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+          <label class="form-label">From <span>*</span></label>
+          <input type="text" class="form-control hasDatepicker" id="rotationStart">
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+          <label class="form-label">To <span>*</span></label>
+          <input type="text" class="form-control hasDatepicker" id="rotationEnd">
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+          <label class="form-label">Time Off Type</label>
+          <select id="inputState" class="form-select">
+            <option selected="">Select...</option>
+            <option value="0">Vacation</option>
+            <option value="1">Incidental Leave</option>
+            <option value="2">Sick Leave</option>
+            <option value="3">Beraavment Leave</option>
+            <option value="4">Other Leave</option>
+          </select>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-3">
+          <label class="form-label">Ammount</label>
+          <div class="d-flex align-items-center input-lbl">
+            <span class="input-group-text">$</span>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-3 justify-content-center d-flex">
+          <button type="button" class="btn btn-secondary rounded-pill blue-btn" data-bs-dismiss="modal">Send Request</button>
+          <button type="button" class="btn btn-secondary rounded-pill blue-btn mx-3" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
