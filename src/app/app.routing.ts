@@ -20,4 +20,4 @@ const routes: Routes = [
    
 
 ];
-export const routingModule: ModuleWithProviders<any> = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' });
+export const routingModule: ModuleWithProviders<any> = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' , useHash: true});
