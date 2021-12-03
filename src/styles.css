@@ -5,3 +5,8 @@
 @import "./assets/css/jquery-ui.css";
 @import "./assets/css/multiselect.css";
 @import "./assets/css/style.css";
+
+
+.toast-top-center{
+    top: 20px !important;
+}

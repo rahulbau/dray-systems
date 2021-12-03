@@ -12,12 +12,12 @@ import { LogoutComponent } from './logout/logout.component';
 */
 
 const routes: Routes = [
-
+    { path: '',  redirectTo: '/login', pathMatch: 'full' }, // catch all route
     { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: '',  redirectTo: '/dashboard', pathMatch: 'full' }, // catch all route
+   
 
 ];
 export const routingModule: ModuleWithProviders<any> = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' });

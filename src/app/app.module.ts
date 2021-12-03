@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,  } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routingModule } from './app.routing';
@@ -20,7 +21,7 @@ import { ItemsModule } from './items/items.module';
 
 import { ItemsService } from './items/_services/items.service';
 import { AuthService } from './_auth/services/auth.service';
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,18 @@ import { AuthService } from './_auth/services/auth.service';
     routingModule,
     ReactiveFormsModule,
     FormsModule,
-    ItemsModule
+    ItemsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      "closeButton": true,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": false,
+      "timeOut": 5000,
+      "extendedTimeOut": 1000,
+    }
+    ),
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/'},

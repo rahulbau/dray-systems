@@ -5,7 +5,7 @@ import { CheckRequiredField } from '../_shared/helpers/form.helper';
 import { AuthService } from '../_auth/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private http : HttpClient
+    private http : HttpClient,
+    public toastrService : ToastrService
   ) { }
 
   ngOnInit() {
@@ -59,9 +60,12 @@ export class LoginComponent implements OnInit {
     this.http.post(environment.apiBaseUrl + '/auth/login', payload).subscribe(response => {
       if(response) {
         this.authService.setDataAfterLogin(response);
+        this.toastrService.success('You are sucessfully login','');
         this.handleLoginSuccess();
       }
     }, err => {
+      const errMsg = err.error.message;
+      this.toastrService.error(errMsg,'');
       this.handleLoginError();
     }, () => {
 

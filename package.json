@@ -23,6 +23,7 @@
     "codelyzer": "^6.0.0",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.7",
     "rxjs-tslint": "^0.1.8",
     "tslib": "^2.0.0",
