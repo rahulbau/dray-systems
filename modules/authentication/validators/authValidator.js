@@ -10,8 +10,8 @@ let userValidations = {
     let schema = Joi.object().keys({
       email: Joi.string().trim().email().required(),
       languageCode: Joi.string().optional().allow(''),
-      password: Joi.string().required(),
-      role: Joi.number().required(),
+      password: Joi.string().optional(),
+      role: Joi.number().optional(),
       userInfo: Joi.object().optional(),
       educationalInfo: Joi.array().optional(),
       emergencyContact: Joi.object().optional()
@@ -112,8 +112,8 @@ let userValidations = {
 
   changePassword: (req, res, next) => {
     let schema = Joi.object().keys({
-      userPasswordOld: Joi.string().required(),
-      userPasswordNew: Joi.string().required(),
+      passwordOld: Joi.string().optional(),
+      passwordNew: Joi.string().required(),
       languageCode: Joi.string().allow('')
 
     })

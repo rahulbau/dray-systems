@@ -32,11 +32,11 @@ async function registerUser(req, res) {
             if (user) {
                 throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
             } else {
-                password = Bcrypt.hashSync(password, 10);
+                password = password ? Bcrypt.hashSync(password, 10) : null;
                 const userData = new User({
                     email,
                     password,
-                    role,
+                    role : role || 1,
                     userInfo,
                     educationalInfo,
                     emergencyContact
@@ -324,24 +324,25 @@ async function changePassword(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         let {
-            userPasswordNew,
-            userPasswordOld,
+            passwordNew,
+            passwordOld,
             languageCode
         } = req.body;
         const user = req.user;
-        let currectPwd = Bcrypt.compareSync(userPasswordOld, user.userPassword)
-        if (currectPwd) {
-            const userPassword = Bcrypt.hashSync(userPasswordNew, 10);
+        if (passwordOld) {
+            let currectPwd = Bcrypt.compareSync(passwordOld, user.password)
+            if (!currectPwd) {
+                logger.log("INVALID CREDENTIALS");
+                throw constants.responseMessageCode.OLD_PASSWORD_INCORRECT;
+            }
+        }
+        const password = Bcrypt.hashSync(passwordNew, 10);
             await User.findByIdAndUpdate(user._id, {
                 $set: {
-                    userPassword
+                    password
                 }
             });
             return responses.actionCompleteResponse(res, languageCode, {}, "", constants.responseMessageCode.PASSWORD_CHANGED_SUCCESSFULLY);
-        } else {
-            logger.log("INVALID CREDENTIALS");
-            throw constants.responseMessageCode.OLD_PASSWORD_INCORRECT;
-        }
 
     } catch (e) {
         logger.error(e);
@@ -356,15 +357,25 @@ async function verifyEmail(req, res) {
         let user = await User.findOne({
             email: req.body.email
         }).lean();
-        if (!user) { 
-            throw constants.responseMessageCode.ACCOUNT_NOT_REGISTER;
-        }
-        const accessToken = await commonFunctions.generateJWToken({userId: user._id});
-        delete user.password;
-        const data = {
-            responseData: user,
-            accessToken : accessToken
+        let flags = {
+            emailExist: true,
+            passwordSet: true
         };
+        const data = {
+            accessToken : null
+        };
+        if (!user) { 
+            flags.emailExist = false;
+            flags.passwordSet = false;
+        } else {
+            if (!user.password) {
+                flags.passwordSet = false;
+            }
+            data.accessToken = await commonFunctions.generateJWToken({userId: user._id});
+            delete user.password;
+        }
+        data.flags = flags;
+        data.responseData = user;
         return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
     } catch (e) {
         logger.error(e);

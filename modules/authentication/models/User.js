@@ -4,7 +4,10 @@ let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
     email: String,
-    password: String,
+    password: {
+        type: String,
+        default: null
+    },
     registrationStep: {
         type: Number,
         default: 1
