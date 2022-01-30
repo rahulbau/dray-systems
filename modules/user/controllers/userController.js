@@ -5,7 +5,7 @@ const {
     constants
 } = require('../../../util');
 const User = require('../../authentication/models/User');
-const Organization = require('../models/organization');
+const UserCoreModel = require('../models/userCore');
 const commonFunctions = require("../../../util/commonFunctions");
 
 
@@ -18,7 +18,7 @@ async function getOrganizations(req, res) {
         if (req.query.searchString) {
             findObject.name = {$regex: req.query.searchString, $options:'i'};
         }
-        const organizations = await Organization.find(findObject, {}, {
+        const organizations = await UserCoreModel.organization.find(findObject, {}, {
             skip,
             limit
         }).sort({
@@ -34,7 +34,7 @@ async function getOrganizations(req, res) {
 async function addOrganizations(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
-        let feedback = new Organization(req.body);
+        let feedback = new UserCoreModel.organization(req.body);
         feedback = await feedback.save();
         return responses.actionCompleteResponse(res, languageCode, feedback, "", constants.responseMessageCode.ACTION_COMPLETE);
     } catch (e) {
@@ -102,12 +102,47 @@ async function getUsers(req, res) {
     }
 }
 
+async function getCoreCompetencies(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        const query = {
+            userId: req.query.userId || req.user._id
+        };
+        const competencies = await UserCoreModel.competencies.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, competencies, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function addCoreCompetencies(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.userId = req.user._id;
+        let competencies = new UserCoreModel.competencies(req.body);
+        competencies = await competencies.save();
+        return responses.actionCompleteResponse(res, languageCode, competencies, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
 
 
 module.exports = {
     editUser,
     getUser,
     getUsers,
+    getCoreCompetencies,
+    addCoreCompetencies,
     getOrganizations,
     addOrganizations
 }
