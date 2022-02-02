@@ -6,6 +6,7 @@ import { AuthGuard } from './_auth/guards/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { SignupComponent } from './signup/signup.component';
 
 /*
 * Routing for the items feature are stored in the items module file
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
+    {path:'signup', component: SignupComponent},
     { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
    
 

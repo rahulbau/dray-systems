@@ -6,6 +6,8 @@ import { AuthService } from '../_auth/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AskingSignupComponent } from '../shared/components/modal/asking-signup/asking-signup.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private http : HttpClient,
-    public toastrService : ToastrService
+    public toastrService : ToastrService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -103,6 +106,11 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', [ Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
+  }
+
+  signUp() {
+    const modalRef = this.modalService.open(AskingSignupComponent,  { centered: true });
+    modalRef.componentInstance.name = 'World';
   }
 
 }

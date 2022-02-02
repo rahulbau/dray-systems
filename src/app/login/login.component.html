@@ -49,7 +49,7 @@
 
                         <a class="btn mt-4 mb-4 btn-primary rounded-pill w-100"  [ngClass]="{'disabled': !loginForm.valid || processing}" (click)="onSubmitButtonClicked()">{{ processing ? 'Validating...' : 'Login' }}</a>
                         <h5 class="or-divider py-3"></h5>
-                        <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#singupOptionModal" class="btn mt-4 btn-primary rounded-pill w-100">Sign up</a>
+                        <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#singupOptionModal" class="btn mt-4 btn-primary rounded-pill w-100" (click)="signUp()">Sign up</a>
                     </form>
                 </div>
             </div>

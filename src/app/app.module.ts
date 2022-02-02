@@ -22,12 +22,16 @@ import { ItemsModule } from './items/items.module';
 import { ItemsService } from './items/_services/items.service';
 import { AuthService } from './_auth/services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from './shared/shared.module';
+import { SignupComponent } from './signup/signup.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
     LogoutComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     FormsModule,
     ItemsModule,
+    SharedModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       "closeButton": true,
@@ -49,6 +54,7 @@ import { ToastrModule } from 'ngx-toastr';
       "extendedTimeOut": 1000,
     }
     ),
+    NgbModule,
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/'},
