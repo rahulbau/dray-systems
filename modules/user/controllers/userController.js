@@ -136,6 +136,73 @@ async function addCoreCompetencies(req, res) {
     }
 }
 
+async function addMediaFolders(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.userId = req.user._id;
+        let mediaFolder = new UserCoreModel.mediaFolder(req.body);
+        mediaFolder = await mediaFolder.save();
+        return responses.actionCompleteResponse(res, languageCode, mediaFolder, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getMediaFolders(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        const query = {
+            userId: req.user._id
+        };
+        const mediaFolder = await UserCoreModel.mediaFolder.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, mediaFolder, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function addMediaInFolder(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.userId = req.user._id;
+        let mediaUrls = new UserCoreModel.mediaUrls(req.body);
+        mediaUrls = await mediaUrls.save();
+        return responses.actionCompleteResponse(res, languageCode, mediaUrls, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getMediaFromFolder(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        const query = {
+            folderId: req.query.folderId
+        };
+        const mediaFolder = await UserCoreModel.mediaUrls.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, mediaFolder, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
 
 module.exports = {
     editUser,
@@ -144,5 +211,9 @@ module.exports = {
     getCoreCompetencies,
     addCoreCompetencies,
     getOrganizations,
-    addOrganizations
+    addOrganizations,
+    addMediaFolders,
+    getMediaFolders,
+    addMediaInFolder,
+    getMediaFromFolder
 }

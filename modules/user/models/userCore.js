@@ -8,7 +8,7 @@ const organizationSchema = new Schema({
 });
 
 const competenciesSchema = new Schema({
-       userId: Schema.Types.ObjectId,
+       userId: { type: Schema.Types.ObjectId, ref: 'User' },
        position : { type: String, default: null },
        experience : { type: String, default: null },
        rating : { type: String, default: null },
@@ -16,7 +16,22 @@ const competenciesSchema = new Schema({
        createdAt: { type: Date, default: Date.now }
 });
 
+const mediaFolderSchema = new Schema({
+       userId: { type: Schema.Types.ObjectId, ref: 'User' },
+       name : String,
+       createdAt: { type: Date, default: Date.now }
+});
+
+const mediaUrlSchema = new Schema({
+       userId: { type: Schema.Types.ObjectId, ref: 'User' },
+       folderId: { type: Schema.Types.ObjectId, ref: 'mediaFolder' },
+       mediaUrl : String,
+       createdAt: { type: Date, default: Date.now }
+});
+
 module.exports = {
        organization: mongoose.model('Organization', organizationSchema),
-       competencies: mongoose.model('competencies', competenciesSchema)
+       competencies: mongoose.model('competencies', competenciesSchema),
+       mediaFolder: mongoose.model('mediaFolder', mediaFolderSchema),
+       mediaUrls: mongoose.model('mediaUrls', mediaUrlSchema)
 };

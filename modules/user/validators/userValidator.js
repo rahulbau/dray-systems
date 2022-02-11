@@ -85,7 +85,64 @@ const userValidations = {
     }
     req.body = validateBody.value;
     next();
-  }
+  },
+
+  addMediaFolders: (req, res, next) => {
+    let schema = Joi.object().keys({
+      name : Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
+  getMediaFolders:  (req, res, next) => {
+    let schema = Joi.object().keys({
+      skip: Joi.number().optional(),
+      limit: Joi.number().optional(),
+    });
+    let validateBody = Joi.validate(req.query, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.query = validateBody.value;
+    next();
+  },
+  getMediaFromFolder:  (req, res, next) => {
+    let schema = Joi.object().keys({
+      skip: Joi.number().optional(),
+      limit: Joi.number().optional(),
+      folderId: Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.query, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.query = validateBody.value;
+    next();
+  },
+  addMediaInFolder: (req, res, next) => {
+    let schema = Joi.object().keys({
+      folderId : Joi.string().required(),
+      mediaUrl : Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
 }
 
 module.exports = userValidations;
