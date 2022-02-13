@@ -153,10 +153,8 @@ async function getMediaFolders(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         const skip = req.query.offset ? parseInt(req.query.offset) : 0;
-        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
-        const query = {
-            userId: req.user._id
-        };
+        const limit = req.query.limit ? parseInt(req.query.limit) : 50;
+        const query = { $or: [ { userId: req.user._id }, { userId: null } ] } 
         const mediaFolder = await UserCoreModel.mediaFolder.find(query, {}, {
             skip,
             limit

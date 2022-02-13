@@ -17,7 +17,7 @@ const competenciesSchema = new Schema({
 });
 
 const mediaFolderSchema = new Schema({
-       userId: { type: Schema.Types.ObjectId, ref: 'User' },
+       userId: { type: Schema.Types.ObjectId, ref: 'User', default: null },
        name : String,
        createdAt: { type: Date, default: Date.now }
 });
