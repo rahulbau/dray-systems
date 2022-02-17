@@ -16,7 +16,7 @@ async function getOrganizations(req, res) {
         const limit = req.query.limit ? parseInt(req.query.limit) : 20;
         let findObject = {};
         if (req.query.searchString) {
-            findObject.name = {$regex: req.query.searchString, $options:'i'};
+            findObject["organizationDetails.name"] = {$regex: req.query.searchString, $options:'i'};
         }
         const organizations = await UserCoreModel.organization.find(findObject, {}, {
             skip,
@@ -202,6 +202,25 @@ async function getMediaFromFolder(req, res) {
     }
 }
 
+async function verifyOrganizationName(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {        
+        let organization = await UserCoreModel.organization.findOne({
+            "organizationDetails.name": req.body.name
+        }).lean();
+        let data = {
+            exist: false
+        };
+        if (organization) {
+            data["exist"] = true
+        }
+        return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
 module.exports = {
     editUser,
     getUser,
@@ -213,5 +232,6 @@ module.exports = {
     addMediaFolders,
     getMediaFolders,
     addMediaInFolder,
-    getMediaFromFolder
+    getMediaFromFolder,
+    verifyOrganizationName
 }

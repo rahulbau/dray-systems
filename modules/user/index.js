@@ -16,5 +16,6 @@ router.get('/mediaFolders',userValidator.getMediaFolders, authMiddleware.auth, u
 
 router.get('/mediaUrls',userValidator.getMediaFromFolder, authMiddleware.auth, userController.getMediaFromFolder);
 router.post('/mediaUrls',userValidator.addMediaInFolder, authMiddleware.auth, userController.addMediaInFolder);
+router.post('/verifyOrganizationName',userValidator.verifyOrganizationName, authMiddleware.auth, userController.verifyOrganizationName);
 
 module.exports = router;

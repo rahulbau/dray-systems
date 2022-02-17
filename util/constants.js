@@ -54,6 +54,7 @@ const ALLOWED_IMAGE_MIME_TYPE = [
     'image/jpg',
     'image/pjpeg',
     'image/png',
+    'application/pdf',
     'image/*'
 ];
 

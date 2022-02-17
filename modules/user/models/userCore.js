@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
        // userId: Schema.Types.ObjectId,
-       name : String,
+       organizationDetails: {
+              type: Object,
+              default: null
+       },
        createdAt: { type: Date, default: Date.now }
 });
 

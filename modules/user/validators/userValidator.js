@@ -44,7 +44,7 @@ const userValidations = {
   },
   addOrganizations: (req, res, next) => {
     let schema = Joi.object().keys({
-      name: Joi.string().required()
+      organizationDetails: Joi.object().required()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
@@ -133,6 +133,20 @@ const userValidations = {
     let schema = Joi.object().keys({
       folderId : Joi.string().required(),
       mediaUrl : Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
+
+  verifyOrganizationName: (req, res, next) => {
+    let schema = Joi.object().keys({
+      name : Joi.string().required()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
