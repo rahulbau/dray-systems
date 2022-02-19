@@ -16,7 +16,7 @@ router.get('/mediaFolders',userValidator.getMediaFolders, authMiddleware.auth, u
 
 router.get('/mediaUrls',userValidator.getMediaFromFolder, authMiddleware.auth, userController.getMediaFromFolder);
 router.post('/mediaUrls',userValidator.addMediaInFolder, authMiddleware.auth, userController.addMediaInFolder);
-router.post('/verifyOrganizationName',userValidator.verifyOrganizationName, authMiddleware.auth, userController.verifyOrganizationName);
+router.post('/verifyOrganizationName',userValidator.verifyOrganizationName, userController.verifyOrganizationName);
 
 router.get('/site',userValidator.getSite, authMiddleware.auth, userController.getSite);
 router.post('/site',userValidator.addSite, authMiddleware.auth, userController.addSite);
