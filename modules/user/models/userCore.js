@@ -1,8 +1,12 @@
+const { number } = require('@hapi/joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const organizationSchema = new Schema({
-       // userId: Schema.Types.ObjectId,
+       role: {
+              type: Number,
+              default: 2
+       },
        organizationDetails: {
               type: Object,
               default: null
@@ -32,9 +36,17 @@ const mediaUrlSchema = new Schema({
        createdAt: { type: Date, default: Date.now }
 });
 
+const organizationSiteSchema = new Schema({
+       organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
+       name : String,
+       openings: Number,
+       createdAt: { type: Date, default: Date.now }
+});
+
 module.exports = {
        organization: mongoose.model('Organization', organizationSchema),
        competencies: mongoose.model('competencies', competenciesSchema),
        mediaFolder: mongoose.model('mediaFolder', mediaFolderSchema),
-       mediaUrls: mongoose.model('mediaUrls', mediaUrlSchema)
+       mediaUrls: mongoose.model('mediaUrls', mediaUrlSchema),
+       organizationSite: mongoose.model('organizationSite', organizationSiteSchema)
 };

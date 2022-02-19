@@ -34,9 +34,17 @@ async function getOrganizations(req, res) {
 async function addOrganizations(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
-        let feedback = new UserCoreModel.organization(req.body);
-        feedback = await feedback.save();
-        return responses.actionCompleteResponse(res, languageCode, feedback, "", constants.responseMessageCode.ACTION_COMPLETE);
+        let organization = new UserCoreModel.organization(req.body);
+        organization = await organization.save();
+        const payload = {
+            userId: organization._id
+        };
+        const accessToken = await commonFunctions.generateJWToken(payload);
+        const data = {
+            responseData: organization,
+            accessToken : accessToken
+        };
+        return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
     } catch (e) {
         logger.error(e);
         return responses.sendError(res, languageCode, {}, "", e);
@@ -221,6 +229,49 @@ async function verifyOrganizationName(req, res) {
     }
 }
 
+async function addSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.organizationId = req.user._id;
+
+        let organizationSite = await UserCoreModel.organizationSite.findOne({
+            name: req.body.name
+        }).lean();
+        if (organizationSite) {
+            throw constants.responseMessageCode.USER_ALREADY_EXISTS;
+        } else {
+            organizationSite = new UserCoreModel.organizationSite(req.body);
+            organizationSite = await organizationSite.save();
+            return responses.actionCompleteResponse(res, languageCode, organizationSite, "", constants.responseMessageCode.ACTION_COMPLETE);
+        }
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        const query = {
+            organizationId: req.query.organizationId || req.user._id
+        };
+        const organizationSite = await UserCoreModel.organizationSite.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, organizationSite, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+
 module.exports = {
     editUser,
     getUser,
@@ -233,5 +284,7 @@ module.exports = {
     getMediaFolders,
     addMediaInFolder,
     getMediaFromFolder,
-    verifyOrganizationName
+    verifyOrganizationName,
+    addSite,
+    getSite
 }

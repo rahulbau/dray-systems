@@ -4,6 +4,7 @@ const responses = require('../../../util/responses');
 const constants = require('../../../util/constants');
 const db = require('../../../mongoLib');
 const User = require('../models/User');
+const UserCoreModel = require('../../user/models/userCore');
 
 exports.auth = async function (req, res, next) {
     const languageCode = req.body.language;
@@ -24,13 +25,16 @@ exports.auth = async function (req, res, next) {
             _id : userID
         });
         if (!user) {
-            throw constants.responseMessageCode.NO_DATA_FOUND;
+            const organization = await UserCoreModel.organization.findOne({
+                _id : userID
+            });
+            if (!organization) {
+                throw constants.responseMessageCode.NO_DATA_FOUND;
+            } else {
+                req.user = organization;
+                next();
+            }
         } else {
-             const validateOpts = {
-                userId: user._id,
-                user,
-                accessToken
-            };
             req.user = user;
             next();
         }

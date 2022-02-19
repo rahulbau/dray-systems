@@ -18,4 +18,7 @@ router.get('/mediaUrls',userValidator.getMediaFromFolder, authMiddleware.auth, u
 router.post('/mediaUrls',userValidator.addMediaInFolder, authMiddleware.auth, userController.addMediaInFolder);
 router.post('/verifyOrganizationName',userValidator.verifyOrganizationName, authMiddleware.auth, userController.verifyOrganizationName);
 
+router.get('/site',userValidator.getSite, authMiddleware.auth, userController.getSite);
+router.post('/site',userValidator.addSite, authMiddleware.auth, userController.addSite);
+
 module.exports = router;

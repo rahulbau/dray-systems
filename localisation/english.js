@@ -18,7 +18,7 @@ const responseMessages = {
     SIZE_EXCEEDS: 'Size should be under 5 MB.',
     VIDEO_SIZE_EXCEEDS: 'Size should be under 10 MB.',
     ACCOUNT_NOT_REGISTER: 'This account is not registered with us.',
-    USER_ALREADY_EXISTS: 'User already exists.',
+    USER_ALREADY_EXISTS: 'Already exists.',
     DOCUMENT_UPLOADED: 'Document uploaded successfully.',
     OTP_SENT : 'OTP sent Successfully.',
     OTP_MISMATCH : 'OTP doesn\'t match.',
