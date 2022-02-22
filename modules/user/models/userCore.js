@@ -38,8 +38,16 @@ const mediaUrlSchema = new Schema({
 
 const organizationSiteSchema = new Schema({
        organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
+       cordinatorId: { type: Schema.Types.ObjectId, default: null, ref: 'HRcordinator' },
        name : String,
        openings: Number,
+       createdAt: { type: Date, default: Date.now }
+});
+
+const HRcordinatorSchema = new Schema({
+       organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
+       name : String,
+       email: String,
        createdAt: { type: Date, default: Date.now }
 });
 
@@ -48,5 +56,7 @@ module.exports = {
        competencies: mongoose.model('competencies', competenciesSchema),
        mediaFolder: mongoose.model('mediaFolder', mediaFolderSchema),
        mediaUrls: mongoose.model('mediaUrls', mediaUrlSchema),
-       organizationSite: mongoose.model('organizationSite', organizationSiteSchema)
+       organizationSite: mongoose.model('organizationSite', organizationSiteSchema),
+       HRcordinator: mongoose.model('HRcordinator', HRcordinatorSchema)
+
 };

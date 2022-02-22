@@ -187,6 +187,51 @@ const userValidations = {
     req.query = validateBody.value;
     next();
   },
+  addHRcordinator: (req, res, next) => {
+    let schema = Joi.object().keys({
+      name : Joi.string().required(),
+      email: Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
+  assignHRcordinatorToSite: (req, res, next) => {
+    let schema = Joi.object().keys({
+      siteId : Joi.string().required(),
+      cordinatorId: Joi.string().required(),
+      status: Joi.number().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
+  getHRcordinator:  (req, res, next) => {
+    let schema = Joi.object().keys({
+      skip: Joi.number().optional(),
+      limit: Joi.number().optional(),
+      cordinatorId: Joi.string().optional(),
+      organizationId: Joi.string().optional()
+    });
+    let validateBody = Joi.validate(req.query, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.query = validateBody.value;
+    next();
+  },
 }
 
 module.exports = userValidations;

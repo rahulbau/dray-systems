@@ -271,6 +271,71 @@ async function getSite(req, res) {
     }
 }
 
+async function addHRcordinator(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.organizationId = req.user._id;
+        let HRcordinator = await UserCoreModel.HRcordinator.findOne({
+            email: req.body.email
+        }).lean();
+        if (HRcordinator) {
+            throw constants.responseMessageCode.USER_ALREADY_EXISTS;
+        } else {
+            HRcordinator = new UserCoreModel.HRcordinator(req.body);
+            HRcordinator = await HRcordinator.save();
+            return responses.actionCompleteResponse(res, languageCode, HRcordinator, "", constants.responseMessageCode.ACTION_COMPLETE);
+        }
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getHRcordinator(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        let query = {
+            organizationId: req.query.organizationId || req.user._id
+        };
+        if (req.query.cordinatorId) {
+            query = { _id : req.query.cordinatorId };
+        }
+        const HRcordinator = await UserCoreModel.HRcordinator.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        }).lean();
+
+        for (let i = 0; i < HRcordinator.length; i++) {
+            HRcordinator[i].assignedSites =  await UserCoreModel.organizationSite.find({cordinatorId: HRcordinator[i]._id});
+        }
+        return responses.actionCompleteResponse(res, languageCode, HRcordinator, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function assignHRcordinatorToSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const options = {
+            new: true
+        };
+        let siteData = await UserCoreModel.organizationSite.findByIdAndUpdate(req.body.siteId, {
+            $set: {
+                cordinatorId: req.body.status == 1 ? req.body.cordinatorId : null
+            }
+        }, options).lean();
+        return responses.actionCompleteResponse(res, languageCode, siteData, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
 
 module.exports = {
     editUser,
@@ -286,5 +351,8 @@ module.exports = {
     getMediaFromFolder,
     verifyOrganizationName,
     addSite,
-    getSite
+    getSite,
+    addHRcordinator,
+    assignHRcordinatorToSite,
+    getHRcordinator
 }
