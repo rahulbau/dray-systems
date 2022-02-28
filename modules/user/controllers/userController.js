@@ -18,7 +18,7 @@ async function getOrganizations(req, res) {
         if (req.query.searchString) {
             findObject["organizationDetails.name"] = {$regex: req.query.searchString, $options:'i'};
         }
-        const organizations = await User.find(findObject, {}, {
+        const organizations = await UserCoreModel.organization.find(findObject, {}, {
             skip,
             limit
         }).sort({
@@ -45,7 +45,7 @@ async function getOrganizationEmployee(req, res) {
                 {"userInfo.lastName": {$regex: req.query.searchString, $options:'i'}}
             ];
         }
-        const organizations = await UserCoreModel.organization.find(findObject, {}, {
+        const organizations = await User.find(findObject, {}, {
             skip,
             limit
         }).sort({
