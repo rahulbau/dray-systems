@@ -18,6 +18,33 @@ async function getOrganizations(req, res) {
         if (req.query.searchString) {
             findObject["organizationDetails.name"] = {$regex: req.query.searchString, $options:'i'};
         }
+        const organizations = await User.find(findObject, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, organizations, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getOrganizationEmployee(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        let findObject = {
+            "userInfo.organizationId": req.query.organizationId || req.user._id
+        };
+        if (req.query.searchString) {
+            findObject["$or"] = [
+                {"userInfo.firstName": {$regex: req.query.searchString, $options:'i'}},
+                {"userInfo.lastName": {$regex: req.query.searchString, $options:'i'}}
+            ];
+        }
         const organizations = await UserCoreModel.organization.find(findObject, {}, {
             skip,
             limit
@@ -30,6 +57,7 @@ async function getOrganizations(req, res) {
         return responses.sendError(res, languageCode, {}, "", e);
     }
 }
+
 
 async function addOrganizations(req, res) {
     const languageCode = req.query.languageCode || 'en';
@@ -256,7 +284,8 @@ async function getSite(req, res) {
         const skip = req.query.offset ? parseInt(req.query.offset) : 0;
         const limit = req.query.limit ? parseInt(req.query.limit) : 20;
         const query = {
-            organizationId: req.query.organizationId || req.user._id
+            organizationId: req.query.organizationId || req.user._id,
+            cordinatorId: null
         };
         const organizationSite = await UserCoreModel.organizationSite.find(query, {}, {
             skip,
@@ -354,5 +383,6 @@ module.exports = {
     getSite,
     addHRcordinator,
     assignHRcordinatorToSite,
-    getHRcordinator
+    getHRcordinator,
+    getOrganizationEmployee
 }

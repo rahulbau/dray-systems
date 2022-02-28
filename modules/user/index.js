@@ -23,5 +23,6 @@ router.post('/site',userValidator.addSite, authMiddleware.auth, userController.a
 router.post('/HRcordinator',userValidator.addHRcordinator, authMiddleware.auth, userController.addHRcordinator);
 router.post('/assignHRcordinatorToSite',userValidator.assignHRcordinatorToSite, authMiddleware.auth, userController.assignHRcordinatorToSite);
 router.get('/HRcordinator',userValidator.getHRcordinator, authMiddleware.auth, userController.getHRcordinator);
+router.get('/organizationEmployee',userValidator.getOrganizationEmployee, authMiddleware.auth, userController.getOrganizationEmployee);
 
 module.exports = router;
