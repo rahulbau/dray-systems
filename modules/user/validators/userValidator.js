@@ -179,7 +179,8 @@ const userValidations = {
       skip: Joi.number().optional(),
       limit: Joi.number().optional(),
       organizationId: Joi.string().optional(),
-      getAll: Joi.boolean().optional()
+      getAll: Joi.boolean().optional(),
+      siteId: Joi.string().optional()
     });
     let validateBody = Joi.validate(req.query, schema);
     if (validateBody.error) {

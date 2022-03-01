@@ -303,18 +303,24 @@ async function getSite(req, res) {
     try {
         const skip = req.query.offset ? parseInt(req.query.offset) : 0;
         const limit = req.query.limit ? parseInt(req.query.limit) : 20;
-        const query = {
+        let query = {
             organizationId: req.query.organizationId || req.user._id,
             cordinatorId: null            
         };
         if (req.query.getAll && req.query.getAll == true) {
            delete query.cordinatorId;
         }
+        if (req.query.siteId) {
+            query = {
+                _id: req.query.siteId
+            };
+        }
         console.log(query);
         const organizationSite = await UserCoreModel.organizationSite.find(query, {}, {
             skip,
             limit
-        }).sort({
+        }).populate('cordinatorId')
+        .sort({
             createdAt: -1
         });
         return responses.actionCompleteResponse(res, languageCode, organizationSite, "", constants.responseMessageCode.ACTION_COMPLETE);
