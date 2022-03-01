@@ -282,7 +282,8 @@ async function addSite(req, res) {
         req.body.organizationId = req.user._id;
 
         let organizationSite = await UserCoreModel.organizationSite.findOne({
-            name: req.body.name
+            name: req.body.name,
+            organizationId: req.user._id
         }).lean();
         if (organizationSite) {
             throw constants.responseMessageCode.USER_ALREADY_EXISTS;
@@ -304,8 +305,12 @@ async function getSite(req, res) {
         const limit = req.query.limit ? parseInt(req.query.limit) : 20;
         const query = {
             organizationId: req.query.organizationId || req.user._id,
-            cordinatorId: null
+            cordinatorId: null            
         };
+        if (req.query.getAll && req.query.getAll == true) {
+           delete query.cordinatorId;
+        }
+        console.log(query);
         const organizationSite = await UserCoreModel.organizationSite.find(query, {}, {
             skip,
             limit

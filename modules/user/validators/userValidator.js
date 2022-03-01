@@ -178,7 +178,8 @@ const userValidations = {
     let schema = Joi.object().keys({
       skip: Joi.number().optional(),
       limit: Joi.number().optional(),
-      organizationId: Joi.string().optional()
+      organizationId: Joi.string().optional(),
+      getAll: Joi.boolean().optional()
     });
     let validateBody = Joi.validate(req.query, schema);
     if (validateBody.error) {
