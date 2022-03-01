@@ -6,10 +6,10 @@ const {
 } = require('../../../util');
 const User = require('../models/User');
 const OTP = require('../models/UserOTP');
+const UserCoreModel = require('../../user/models/userCore');
 const commonFunctions = require("../../../util/commonFunctions");
 const moment = require('moment');
 const Bcrypt = require("bcryptjs");
-const { addInsurancePolicy } = require('../../user/validators/userValidator');
 
 
 //****************************************************************************************/
@@ -29,7 +29,10 @@ async function registerUser(req, res) {
             let user = await User.findOne({
                 email
             }).lean();
-            if (user) {
+            let organization = await UserCoreModel.organization.findOne({
+                email
+            }).lean();
+            if (user || organization) {
                 throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
             } else {
                 password = password ? Bcrypt.hashSync(password, 10) : null;
@@ -77,6 +80,12 @@ async function loginUser(req, res) {
             let user = await User.findOne({
                 email
             }).lean();
+
+            if (!user) {
+                user = await UserCoreModel.organization.findOne({
+                    email
+                }).lean();
+            }
             if (user) {      
                 
                 let currectPwd = Bcrypt.compareSync(password, user.password)

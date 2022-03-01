@@ -44,7 +44,9 @@ const userValidations = {
   },
   addOrganizations: (req, res, next) => {
     let schema = Joi.object().keys({
-      organizationDetails: Joi.object().required()
+      organizationDetails: Joi.object().required(),
+      email: Joi.string().required(),
+      password: Joi.string().required()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {

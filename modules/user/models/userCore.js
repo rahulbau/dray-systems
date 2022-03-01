@@ -11,6 +11,8 @@ const organizationSchema = new Schema({
               type: Object,
               default: null
        },
+       email: String,
+       password: String,
        createdAt: { type: Date, default: Date.now }
 });
 

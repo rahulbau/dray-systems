@@ -7,6 +7,7 @@ const {
 const User = require('../../authentication/models/User');
 const UserCoreModel = require('../models/userCore');
 const commonFunctions = require("../../../util/commonFunctions");
+const Bcrypt = require("bcryptjs");
 
 
 async function getOrganizations(req, res) {
@@ -18,7 +19,12 @@ async function getOrganizations(req, res) {
         if (req.query.searchString) {
             findObject["organizationDetails.name"] = {$regex: req.query.searchString, $options:'i'};
         }
-        const organizations = await UserCoreModel.organization.find(findObject, {}, {
+        const projection = {
+            "_id": 1,
+            "organizationDetails.name": 1,
+            "organizationDetails.image": 1
+        }
+        const organizations = await UserCoreModel.organization.find(findObject, projection, {
             skip,
             limit
         }).sort({
@@ -37,8 +43,9 @@ async function getOrganizationEmployee(req, res) {
         const skip = req.query.offset ? parseInt(req.query.offset) : 0;
         const limit = req.query.limit ? parseInt(req.query.limit) : 20;
         let findObject = {
-            "userInfo.organizationId": req.query.organizationId || req.user._id
+            "userInfo.organizationId": req.query.organizationId || req.user._id.toString()
         };
+
         if (req.query.searchString) {
             findObject["$or"] = [
                 {"userInfo.firstName": {$regex: req.query.searchString, $options:'i'}},
@@ -62,17 +69,29 @@ async function getOrganizationEmployee(req, res) {
 async function addOrganizations(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
-        let organization = new UserCoreModel.organization(req.body);
-        organization = await organization.save();
-        const payload = {
-            userId: organization._id
-        };
-        const accessToken = await commonFunctions.generateJWToken(payload);
-        const data = {
-            responseData: organization,
-            accessToken : accessToken
-        };
-        return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
+        let user = await User.findOne({
+            email: req.body.email
+        }).lean();
+        let organization = await UserCoreModel.organization.findOne({
+            email: req.body.email
+        }).lean();
+        if (user || organization) {
+            throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
+        } else {
+            req.body.password = Bcrypt.hashSync(req.body.password, 10);
+            let organization = new UserCoreModel.organization(req.body);
+            organization = await organization.save();
+            const payload = {
+                userId: organization._id
+            };
+            const accessToken = await commonFunctions.generateJWToken(payload);
+            const data = {
+                responseData: organization,
+                accessToken : accessToken
+            };
+            return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
+        }
+        
     } catch (e) {
         logger.error(e);
         return responses.sendError(res, languageCode, {}, "", e);
