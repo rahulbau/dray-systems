@@ -252,6 +252,33 @@ const userValidations = {
     req.query = validateBody.value;
     next();
   },
+  getJobSite:  (req, res, next) => {
+    let schema = Joi.object().keys({
+      skip: Joi.number().optional(),
+      limit: Joi.number().optional()
+    });
+    let validateBody = Joi.validate(req.query, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.query = validateBody.value;
+    next();
+  },
+  addJobSite: (req, res, next) => {
+    let schema = Joi.object().keys({
+      jobDetails : Joi.object().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
 }
 
 module.exports = userValidations;

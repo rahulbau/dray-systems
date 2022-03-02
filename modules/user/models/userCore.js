@@ -53,12 +53,19 @@ const HRcordinatorSchema = new Schema({
        createdAt: { type: Date, default: Date.now }
 });
 
+const jobSiteSchema = new Schema({
+       organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
+       jobDetails : Object,
+       createdAt: { type: Date, default: Date.now }
+});
+
 module.exports = {
        organization: mongoose.model('Organization', organizationSchema),
        competencies: mongoose.model('competencies', competenciesSchema),
        mediaFolder: mongoose.model('mediaFolder', mediaFolderSchema),
        mediaUrls: mongoose.model('mediaUrls', mediaUrlSchema),
        organizationSite: mongoose.model('organizationSite', organizationSiteSchema),
-       HRcordinator: mongoose.model('HRcordinator', HRcordinatorSchema)
+       HRcordinator: mongoose.model('HRcordinator', HRcordinatorSchema),
+       jobSite: mongoose.model('jobSite', jobSiteSchema)
 
 };

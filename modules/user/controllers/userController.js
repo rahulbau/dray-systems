@@ -396,6 +396,40 @@ async function assignHRcordinatorToSite(req, res) {
     }
 }
 
+async function addJobSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        req.body.organizationId = req.user._id;
+        let jobsite = new UserCoreModel.jobSite(req.body);
+        jobsite = await jobsite.save();
+        return responses.actionCompleteResponse(res, languageCode, jobsite, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+async function getJobSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        const query = {
+            organizationId: req.user._id
+        };
+        const jobsite = await UserCoreModel.jobSite.find(query, {}, {
+            skip,
+            limit
+        }).sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, jobsite, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
 module.exports = {
     editUser,
     getUser,
@@ -414,5 +448,7 @@ module.exports = {
     addHRcordinator,
     assignHRcordinatorToSite,
     getHRcordinator,
-    getOrganizationEmployee
+    getOrganizationEmployee,
+    getJobSite,
+    addJobSite
 }
