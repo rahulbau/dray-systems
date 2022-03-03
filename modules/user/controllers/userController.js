@@ -430,6 +430,28 @@ async function getJobSite(req, res) {
     }
 }
 
+async function getJobBasedUsers(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        const skip = req.query.offset ? parseInt(req.query.offset) : 0;
+        const limit = req.query.limit ? parseInt(req.query.limit) : 20;
+        let query = {
+            position: req.query.position
+        };
+        const jobBasedUsers = await UserCoreModel.competencies.find(query, {userId: 1}, {
+            skip,
+            limit
+        }).populate('userId')
+        .sort({
+            createdAt: -1
+        });
+        return responses.actionCompleteResponse(res, languageCode, jobBasedUsers, "", constants.responseMessageCode.ACTION_COMPLETE);
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
 module.exports = {
     editUser,
     getUser,
@@ -450,5 +472,6 @@ module.exports = {
     getHRcordinator,
     getOrganizationEmployee,
     getJobSite,
-    addJobSite
+    addJobSite,
+    getJobBasedUsers
 }

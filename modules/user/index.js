@@ -27,5 +27,6 @@ router.get('/organizationEmployee',userValidator.getOrganizationEmployee, authMi
 
 router.get('/jobsite',userValidator.getJobSite, authMiddleware.auth, userController.getJobSite);
 router.post('/jobsite',userValidator.addJobSite, authMiddleware.auth, userController.addJobSite);
+router.get('/jobBasedUsers',userValidator.getJobBasedUsers, authMiddleware.auth, userController.getJobBasedUsers);
 
 module.exports = router;
