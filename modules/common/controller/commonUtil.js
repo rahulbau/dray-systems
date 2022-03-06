@@ -5,6 +5,10 @@ const commonFunctions = require("../../../util/commonFunctions");
 const logger = require("../../../util/logger");
 const commonModel = require('../models/commonModel');
 const fs = require('fs');
+const csv = require('fast-csv');
+const User = require('../../authentication/models/User');
+const UserCoreModel = require('../../user/models/userCore');
+
 
 function uploadMedia(req, res) {
     logger.request("API", req.protocol + '://' + req.get('host') + req.originalUrl);
@@ -77,61 +81,94 @@ function uploadMedia(req, res) {
     }
 }
 
-async function addCategory(req,res){
-    const languageCode =req.query.languageCode || 'en';
-    try{
-        const icdCodes = fs.readFileSync(__dirname + '/category.json', 'utf-8');
-        JSON.parse(icdCodes).map( async singleObj => {
-            const data = new commonModel.category(singleObj);
-            await data.save();
-        });
-        return responses.actionCompleteResponse(res, languageCode, {}, "", constants.responseMessageCode.ACTION_COMPLETE);
-    }catch( e ){
-        logger.error(e);
-        return responses.sendError(res,languageCode,{},"",e)
-
-    }
-}
-
-
-async function getCategory(req,res){
+async function uploadBulkEmployees(req, res) {
     const languageCode = req.query.languageCode || 'en';
-    try{
-        const tempArr = [];
-        if (req.query.long && req.query.lat) {
-            tempArr.push({
-                  $geoNear: {
-                     near: { type: "Point", coordinates: [ parseFloat(req.query.long) , parseFloat(req.query.lat) ] },
-                     distanceField: "dist.calculated",
-                     maxDistance: req.query.distance || 500,
-                     includeLocs: "dist.location",
-                     spherical: true
-                  }
+    try {
+
+        if (!req.files.file || req.files.file.type !== 'text/csv') {
+            return responses.sendCustomResponse(res, multilingualService.getResponseMessage(constants.responseMessageCode.NOT_A_VALID_IMAGE_LIST,
+                languageCode), constants.responseMessageFlags.CLIENT_ERROR, {}, {}); 
+        }
+        console.log(req.files);
+
+        if (req.files.file.size < constants.MAX_IMAGE_SIZE_ALLOWED) {
+            // Import CSV File to MongoDB database
+            let csvData = [];
+            let filePath = req.files.file.path;
+            fs.createReadStream(filePath)
+                .pipe(csv.parse({ headers: true }))
+                .on("error", (error) => {
+                    throw constants.responseMessageCode.UPLOAD_ERROR;
+                })
+                .on("data", (row) => {
+                    csvData.push(row);
+                })
+                .on("end", async () => {
+                 let responseData = await addBulkEmployees(csvData, req.user._id.toString());
+                 return responses.actionCompleteResponse(res, languageCode, responseData, "", constants.responseMessageCode.ACTION_COMPLETE);
                 });
-        }
-
-        if (req.query.searchString) {
-            tempArr.push({ $match :{ $or :[{categoryName: {$regex: req.query.searchString,$options:'i'}},{"metaData.name": {$regex: req.query.searchString,$options:'i'}}]}});
         } else {
-            const tempObj = {parentId : req.query.parentId || ""};
-            if (req.query.type) {
-                tempObj.type = parseInt(req.query.type);
-            }
-            tempArr.push({ $match : tempObj});
+            return res.send(JSON.stringify({
+                message: multilingualService.getResponseMessage(constants.responseMessageCode.SIZE_EXCEEDS,
+                    language || 'en'), status: constants.responseFlags.SHOW_ERROR_MESSAGE,
+                data: {}
+            }));
         }
-        
-       let data = await commonModel.category.aggregate(tempArr);
-        return responses.actionCompleteResponse(res, languageCode, data, "", constants.responseMessageCode.ACTION_COMPLETE);
-    }catch( e ){
+    } catch (e) {
         logger.error(e);
-        return responses.sendError(res,languageCode,{},"",e)
-
+        return responses.sendError(res, languageCode, {}, "", e);
     }
 }
+
+async function addBulkEmployees(employeeArr, id) {
+    const failureData = [];
+    const successData = [];
+    const userInfoArr = ["address", "cellPhoneNumber", "citizenship", "city", "companyPhone", "companyEmail", "dob", "designation", "employeeId", "extension", "firstName", "gender", "homePhoneNumber", "indigenous", "lastName", "personalEmail", "zipcode", "primaryLang", "referredBy", "SIN", "state"];
+    for (const elem of employeeArr) {
+        if (elem.email) {
+            let user = await User.findOne({
+                email: elem.email
+            }).lean();
+
+            if (!user) {
+                user = await UserCoreModel.organization.findOne({
+                    email: elem.email
+                }).lean();
+            }
+            if (user) {
+                elem.message = "Email already exist in system";
+                failureData.push(elem);
+            } else {
+                let employeeObj = {
+                    email: elem.email,
+                    userInfo: {
+                        organizationId: id
+                    }
+                };
+                userInfoArr.forEach(key => {
+                    if (elem[key]) {
+                        employeeObj["userInfo"][key] = elem[key];
+                    }
+                });
+                let userData = new User(employeeObj);
+                userData = await userData.save();
+                successData.push(userData);
+            }
+            
+        } else {
+            elem.message = "Email not present in CSV file";
+            failureData.push(elem);
+        }
+    };
+    return {
+        successData,
+        failureData
+    }
+}
+
   
 
 module.exports = {
     uploadMedia,
-    addCategory,
-    getCategory
+    uploadBulkEmployees
 };
