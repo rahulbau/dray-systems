@@ -14,7 +14,9 @@ let userValidations = {
       role: Joi.number().optional(),
       userInfo: Joi.object().optional(),
       educationalInfo: Joi.array().optional(),
-      emergencyContact: Joi.object().optional()
+      emergencyContact: Joi.object().optional(),
+      longitude: Joi.number().optional(),
+      latitude: Joi.number().optional()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {

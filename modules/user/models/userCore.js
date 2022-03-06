@@ -56,8 +56,14 @@ const HRcordinatorSchema = new Schema({
 const jobSiteSchema = new Schema({
        organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
        jobDetails : Object,
+       location: {
+              type: { type: String, enum: ["Point"], default: "Point" },
+              coordinates: { type: [Number], default: [95.7129, 37.0902] },
+       },
        createdAt: { type: Date, default: Date.now }
 });
+
+jobSiteSchema.index({ "location": "2dsphere" });
 
 module.exports = {
        organization: mongoose.model('Organization', organizationSchema),

@@ -36,10 +36,15 @@ let UserSchema = new Schema({
         type: Boolean,
         default: false
     },
+    location: {
+        type: { type: String, enum: ["Point"], default: "Point" },
+        coordinates: { type: [Number], default: [95.7129, 37.0902] },
+    },
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
 
+UserSchema.index({ "location": "2dsphere" });
 module.exports = mongoose.model('User', UserSchema);

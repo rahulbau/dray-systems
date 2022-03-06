@@ -24,7 +24,9 @@ async function registerUser(req, res) {
             role,
             userInfo,
             educationalInfo,
-            emergencyContact
+            emergencyContact,
+            longitude,
+            latitude
         } = req.body;
             let user = await User.findOne({
                 email
@@ -36,14 +38,21 @@ async function registerUser(req, res) {
                 throw constants.responseMessageCode.EMAIL_ALREADY_EXISTS;
             } else {
                 password = password ? Bcrypt.hashSync(password, 10) : null;
-                const userData = new User({
+                const userdata = {
                     email,
                     password,
                     role : role || 1,
                     userInfo,
                     educationalInfo,
                     emergencyContact
-                });
+                };
+                if (latitude && longitude) {
+                    userdata["location"] = {
+                        type: "Point",
+                        coordinates: [longitude, latitude],
+                    }
+                }
+                const userData = new User(userdata);
                 const user = await userData.save();
                 const payload = {
                     userId: user._id

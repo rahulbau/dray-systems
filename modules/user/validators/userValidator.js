@@ -268,7 +268,9 @@ const userValidations = {
   },
   addJobSite: (req, res, next) => {
     let schema = Joi.object().keys({
-      jobDetails : Joi.object().required()
+      jobDetails : Joi.object().required(),
+      longitude: Joi.number().optional(),
+      latitude: Joi.number().optional(),
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {

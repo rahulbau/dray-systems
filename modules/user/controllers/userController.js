@@ -400,6 +400,12 @@ async function addJobSite(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
         req.body.organizationId = req.user._id;
+        if (req.body.latitude && req.body.longitude) {
+            req.body.location = {
+                type: "Point",
+                coordinates: [req.body.longitude, req.body.latitude],
+            }
+        }
         let jobsite = new UserCoreModel.jobSite(req.body);
         jobsite = await jobsite.save();
         return responses.actionCompleteResponse(res, languageCode, jobsite, "", constants.responseMessageCode.ACTION_COMPLETE);
