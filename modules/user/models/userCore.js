@@ -50,6 +50,7 @@ const HRcordinatorSchema = new Schema({
        organizationId: { type: Schema.Types.ObjectId, ref: 'Organization' },
        name : String,
        email: String,
+       designation: { type: String, default: null },
        createdAt: { type: Date, default: Date.now }
 });
 

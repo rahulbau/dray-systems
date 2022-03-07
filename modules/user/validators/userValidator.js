@@ -194,7 +194,8 @@ const userValidations = {
   addHRcordinator: (req, res, next) => {
     let schema = Joi.object().keys({
       name : Joi.string().required(),
-      email: Joi.string().required()
+      email: Joi.string().required(),
+      designation: Joi.string().optional()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
