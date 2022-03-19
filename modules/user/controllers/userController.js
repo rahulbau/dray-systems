@@ -120,14 +120,7 @@ async function editUser(req, res) {
 async function getUser(req, res) {
     const languageCode = req.query.languageCode || 'en';
     try {
-        const query = {
-            _id: req.query.userId || req.user._id
-        };
-        let userData = await User.findOne(query);
-        userData = userData.toObject();
-        delete userData.userPassword;
-        delete userData.accessTokens;
-        return responses.actionCompleteResponse(res, languageCode, userData, "", constants.responseMessageCode.ACTION_COMPLETE);
+        return responses.actionCompleteResponse(res, languageCode, req.user, "", constants.responseMessageCode.ACTION_COMPLETE);
 
     } catch (e) {
         logger.error(e);
