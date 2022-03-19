@@ -451,6 +451,46 @@ async function getJobBasedUsers(req, res) {
     }
 }
 
+async function editSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        if (req.body.name) {
+            let organizationSite = await UserCoreModel.organizationSite.findOne({
+                name: req.body.name,
+                organizationId: req.user._id
+            }).lean();
+            if (organizationSite) {
+                throw constants.responseMessageCode.USER_ALREADY_EXISTS;
+            }
+        }
+        const options = {
+            new: true
+        };
+        let site = await UserCoreModel.organizationSite.findByIdAndUpdate(req.body._id, {
+            $set: req.body
+        }, options).lean();
+        return responses.actionCompleteResponse(res, languageCode, site, "", constants.responseMessageCode.ACTION_COMPLETE);
+
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+
+async function deleteSite(req, res) {
+    const languageCode = req.query.languageCode || 'en';
+    try {
+        let site = await UserCoreModel.organizationSite.deleteOne({ _id: req.body._id});
+        return responses.actionCompleteResponse(res, languageCode, site, "", constants.responseMessageCode.ACTION_COMPLETE);
+
+    } catch (e) {
+        logger.error(e);
+        return responses.sendError(res, languageCode, {}, "", e);
+    }
+}
+
+
 module.exports = {
     editUser,
     getUser,
@@ -472,5 +512,7 @@ module.exports = {
     getOrganizationEmployee,
     getJobSite,
     addJobSite,
-    getJobBasedUsers
+    getJobBasedUsers,
+    editSite,
+    deleteSite
 }

@@ -162,7 +162,8 @@ const userValidations = {
   addSite: (req, res, next) => {
     let schema = Joi.object().keys({
       name : Joi.string().required(),
-      openings: Joi.number().required()
+      openings: Joi.number().required(),
+      status: Joi.string().optional()
     });
     let validateBody = Joi.validate(req.body, schema);
     if (validateBody.error) {
@@ -297,6 +298,35 @@ const userValidations = {
     req.query = validateBody.value;
     next();
   },
+  editSite: (req, res, next) => {
+    let schema = Joi.object().keys({
+      _id : Joi.string().required(),
+      name : Joi.string().optional(),
+      openings: Joi.number().optional(),
+      status: Joi.string().optional()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  },
+  deleteSite: (req, res, next) => {
+    let schema = Joi.object().keys({
+      _id : Joi.string().required()
+    });
+    let validateBody = Joi.validate(req.body, schema);
+    if (validateBody.error) {
+      console.log('validateBody error', validateBody.error)
+      let errorMessage = validateBody.error.details[0].message;
+      return responses.sendError(res, "", {}, errorMessage, 'PARAMETER_MISSING');
+    }
+    req.body = validateBody.value;
+    next();
+  }
 }
 
 module.exports = userValidations;
