@@ -43,6 +43,7 @@ const organizationSiteSchema = new Schema({
        cordinatorId: { type: Schema.Types.ObjectId, default: null, ref: 'HRcordinator' },
        name : String,
        openings: Number,
+       status :  { type: String, default: null },
        createdAt: { type: Date, default: Date.now }
 });
 
